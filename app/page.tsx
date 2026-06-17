@@ -58,15 +58,6 @@ function Overprint({ children, className = "" }: { children: React.ReactNode; cl
   );
 }
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
 export default function Home() {
   useAutoReveal();
   const progress = useScrollProgress();
@@ -187,24 +178,23 @@ export default function Home() {
               <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Selected prints</h2>
             </div>
             <div className="hidden text-[10px] font-bold uppercase tracking-widest text-black/40 sm:block">
-              sheets stack as you scroll
+              printed in sequence
             </div>
           </div>
 
-          <div className="relative space-y-6">
+          <div className="relative space-y-8">
             {projects.map((p, i) => {
-              const rot = i % 2 === 0 ? -1.4 : 1.2;
+              const rot = i % 2 === 0 ? -1 : 1;
               const isPink = i % 2 === 0;
               return (
                 <article
                   key={p.name}
                   data-reveal
                   style={{
-                    top: `${80 + i * 26}px`,
                     transform: `rotate(${rot}deg)`,
                     ["--reveal-delay" as string]: `${i * 60}ms`,
                   }}
-                  className="sticky overflow-hidden border-2 border-black bg-[#f6f1e7] shadow-[8px_8px_0_0_#111]"
+                  className="overflow-hidden border-2 border-black bg-[#f6f1e7] shadow-[8px_8px_0_0_#111]"
                 >
                   <Halftone color={isPink ? PINK : BLUE} size={12} opacity={0.1} />
                   <div className="relative grid gap-6 p-6 sm:p-10 md:grid-cols-12">
@@ -310,20 +300,13 @@ export default function Home() {
             <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">masthead</div>
             <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">The studio</h2>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2">
             {team.map((t, i) => (
               <div key={t.name} data-reveal style={{ ["--reveal-delay" as string]: `${i * 70}ms` }} className="relative overflow-hidden border-2 border-black">
-                {t.img ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={t.img} alt={t.name} className="h-56 w-full object-cover" style={{ filter: "contrast(1.05) saturate(0.9)" }} />
-                ) : (
-                  <div
-                    className="flex h-56 w-full items-center justify-center text-6xl"
-                    style={{ fontFamily: "var(--font-display)", background: i % 2 ? BLUE : PINK, color: PAPER }}
-                  >
-                    {initials(t.name)}
-                  </div>
-                )}
+                <div className="aspect-[4/5] w-full overflow-hidden bg-[#eee5d3]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={t.img} alt={t.name} className="h-full w-full object-cover object-top" style={{ filter: "contrast(1.05) saturate(0.9)" }} />
+                </div>
                 <Halftone color={PINK} size={6} opacity={0.18} />
                 <div className="p-5">
                   <h3 style={{ fontFamily: "var(--font-display)" }} className="text-3xl uppercase">{t.name}</h3>

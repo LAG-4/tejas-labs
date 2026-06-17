@@ -115,22 +115,16 @@ export const process = [
 
 export const team = [
   {
-    name: "Tushar N.",
+    name: "Tushar Naidu",
     role: "Founder · AI & Backend",
     img: "/tushar.jpeg",
     bio: "Leads the AI architecture — LangGraph workflows, RAG systems, and the backend that keeps them running in production.",
   },
   {
-    name: "Aryan G.",
+    name: "Ansh Pandey",
     role: "Full-Stack · Integrations",
-    img: undefined,
+    img: "/ansh.png",
     bio: "Builds the full-stack apps and SaaS integrations around the models — React, Next.js, Node, and the glue between tools.",
-  },
-  {
-    name: "Nitin X.",
-    role: "Data & DevOps",
-    img: undefined,
-    bio: "Owns the data pipelines, scraping, Docker/K8s deployment, and the observability that keeps everything accountable.",
   },
 ];
 
