@@ -1,65 +1,467 @@
-import Image from "next/image";
+"use client";
+
+import { Archivo_Black, Space_Grotesk } from "next/font/google";
+import {
+  faqs,
+  projects,
+  process,
+  services,
+  stats,
+  studio,
+  team,
+  techStack,
+  testimonials,
+} from "@/lib/studio";
+import { useAutoReveal, useScrollProgress } from "@/lib/hooks";
+
+const display = Archivo_Black({ weight: "400", subsets: ["latin"], variable: "--font-display", display: "swap" });
+const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
+
+const PAPER = "#f6f1e7";
+const PINK = "#ff2d6f";
+const BLUE = "#1b3cff";
+const INK = "#111111";
+
+function Halftone({ color, size = 10, opacity = 0.5 }: { color: string; size?: number; opacity?: number }) {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0"
+      style={{
+        backgroundImage: `radial-gradient(${color} 1px, transparent 1.4px)`,
+        backgroundSize: `${size}px ${size}px`,
+        opacity,
+      }}
+    />
+  );
+}
+
+/** Overprint headline: pink + blue layers offset, multiplied on paper. */
+function Overprint({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <span className={`relative inline-block ${className}`}>
+      <span className="relative z-10 text-[#111]">{children}</span>
+      <span
+        aria-hidden
+        className="absolute inset-0 z-20 text-[#ff2d6f]"
+        style={{ transform: "translate(-6px, 3px)", mixBlendMode: "multiply" }}
+      >
+        {children}
+      </span>
+      <span
+        aria-hidden
+        className="absolute inset-0 z-30 text-[#1b3cff]"
+        style={{ transform: "translate(6px, -3px)", mixBlendMode: "multiply" }}
+      >
+        {children}
+      </span>
+    </span>
+  );
+}
+
+function initials(name: string) {
+  return name
+    .split(" ")
+    .map((p) => p[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
 
 export default function Home() {
+  useAutoReveal();
+  const progress = useScrollProgress();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div
+      className={`${display.variable} ${body.variable} min-h-screen text-[#111]`}
+      style={{ background: PAPER, fontFamily: "var(--font-body)" }}
+    >
+      {/* press progress as a registration bar */}
+      <div className="fixed left-0 top-0 z-50 flex h-2 w-full">
+        <div className="h-full bg-[#ff2d6f]" style={{ width: `${progress * 100}%` }} />
+        <div className="h-full flex-1 bg-[#1b3cff]/15" />
+      </div>
+
+      <Nav />
+
+      {/* tech stack marquee */}
+      <div className="marquee-wrap overflow-hidden border-y border-black/15 bg-[#111] py-3 text-[#f6f1e7]">
+        <div className="marquee-track flex w-max gap-8 whitespace-nowrap" style={{ ["--marquee-duration" as string]: "44s" }}>
+          {Array.from({ length: 2 }).map((_, k) => (
+            <span key={k} className="flex gap-8 text-xs font-bold uppercase tracking-[0.25em]">
+              {techStack.map((t, i) => (
+                <span key={i} className="flex items-center gap-8">
+                  {t} <span className="text-[#ff2d6f]">✦</span>
+                </span>
+              ))}
+            </span>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+      </div>
+
+      <main className="relative mx-auto max-w-6xl px-6 pb-32 sm:px-10">
+        {/* hero poster */}
+        <section className="relative grid gap-10 py-14 lg:grid-cols-12 lg:gap-8">
+          <div className="relative lg:col-span-8">
+            <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">
+              <span className="h-2 w-2 rounded-full bg-[#ff2d6f]" />
+              <span className="h-2 w-2 rounded-full bg-[#1b3cff]" />
+              {studio.name} · AI automation studio
+            </div>
+            <h1
+              style={{ fontFamily: "var(--font-display)" }}
+              className="text-[clamp(2.8rem,9vw,7rem)] uppercase leading-[0.86] tracking-tight"
+            >
+              We ship AI that
+              <br />
+              survives
+              <br />
+              <Overprint>production.</Overprint>
+            </h1>
+            <p className="mt-8 max-w-md text-base leading-relaxed text-black/70">
+              {studio.blurb}
+            </p>
+            <div className="mt-8 inline-flex items-center gap-3 border-2 border-black bg-[#f6f1e7] px-4 py-2 text-xs font-bold uppercase tracking-[0.2em]">
+              <span className="text-[#ff2d6f]">★</span>
+              {studio.trust}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href="#contact"
+                className="bg-[#111] px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] text-[#f6f1e7] transition hover:bg-[#ff2d6f]"
+              >
+                {studio.cta} ▸
+              </a>
+              <a
+                href="#work"
+                className="border-2 border-black px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] transition hover:bg-black hover:text-[#f6f1e7]"
+              >
+                See shipped work
+              </a>
+            </div>
+          </div>
+
+          {/* poster block */}
+          <div className="relative lg:col-span-4">
+            <div className="relative aspect-[3/4] overflow-hidden border-2 border-black bg-[#f6f1e7]">
+              <Halftone color={INK} size={9} opacity={0.12} />
+              <div className="absolute inset-0 p-5">
+                <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest">
+                  <span>{studio.wordmark}</span>
+                  <span>EST. {studio.founded}</span>
+                </div>
+                <div className="relative mt-6 h-[58%]">
+                  <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff2d6f]" style={{ mixBlendMode: "multiply" }} />
+                  <div className="absolute left-[58%] top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1b3cff]" style={{ mixBlendMode: "multiply" }} />
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[10px] font-bold uppercase tracking-widest text-[#f6f1e7]">
+                    AI that<br />runs
+                  </div>
+                </div>
+                <div style={{ fontFamily: "var(--font-display)" }} className="absolute bottom-5 left-5 right-5 text-2xl uppercase leading-none">
+                  RAG · Agents · Apps
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* stats */}
+        <section className="grid grid-cols-2 gap-px border-2 border-black bg-black lg:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="bg-[#f6f1e7] p-6">
+              <div style={{ fontFamily: "var(--font-display)" }} className="text-5xl text-[#1b3cff]">
+                {s.value}
+              </div>
+              <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-black/60">
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {/* THE STACKING PRESS — shipped work */}
+        <section id="work" className="scroll-mt-24 py-20">
+          <div className="mb-10 flex items-end justify-between">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">shipped work</div>
+              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Selected prints</h2>
+            </div>
+            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-black/40 sm:block">
+              sheets stack as you scroll
+            </div>
+          </div>
+
+          <div className="relative space-y-6">
+            {projects.map((p, i) => {
+              const rot = i % 2 === 0 ? -1.4 : 1.2;
+              const isPink = i % 2 === 0;
+              return (
+                <article
+                  key={p.name}
+                  data-reveal
+                  style={{
+                    top: `${80 + i * 26}px`,
+                    transform: `rotate(${rot}deg)`,
+                    ["--reveal-delay" as string]: `${i * 60}ms`,
+                  }}
+                  className="sticky overflow-hidden border-2 border-black bg-[#f6f1e7] shadow-[8px_8px_0_0_#111]"
+                >
+                  <Halftone color={isPink ? PINK : BLUE} size={12} opacity={0.1} />
+                  <div className="relative grid gap-6 p-6 sm:p-10 md:grid-cols-12">
+                    <div className="md:col-span-2">
+                      <div style={{ fontFamily: "var(--font-display)" }} className="text-6xl leading-none text-black/15">
+                        {String(i + 1).padStart(2, "0")}
+                      </div>
+                      <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
+                        {p.year}
+                      </div>
+                    </div>
+                    <div className="md:col-span-6">
+                      <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: isPink ? PINK : BLUE }}>
+                        {p.discipline}
+                      </div>
+                      <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-1 text-4xl uppercase leading-none sm:text-5xl">
+                        {p.name}
+                      </h3>
+                      <p className="mt-3 max-w-md text-sm leading-relaxed text-black/70">
+                        {p.blurb}
+                      </p>
+                    </div>
+                    <div className="md:col-span-4">
+                      <div className="text-[10px] font-bold uppercase tracking-widest text-black/40">results</div>
+                      <ul className="mt-3 space-y-2">
+                        {p.metrics.map((m) => (
+                          <li key={m} className="flex items-center gap-2 text-sm font-bold">
+                            <span className="h-2.5 w-2.5" style={{ background: isPink ? PINK : BLUE }} />
+                            {m}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* capabilities */}
+        <section id="services" className="scroll-mt-24 border-t-2 border-black py-20">
+          <div className="mb-10 flex items-end justify-between">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">what we deliver</div>
+              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Contents</h2>
+            </div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-black/40">five disciplines</div>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {services.map((s, i) => (
+              <div
+                key={s.n}
+                data-reveal
+                style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}
+                className={`group relative overflow-hidden border-2 border-black p-6 ${i === services.length - 1 ? "md:col-span-2" : ""}`}
+              >
+                <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#1b3cff]">
+                  <span>{s.n}</span>
+                  <span className="h-px flex-1 bg-black/20" />
+                </div>
+                <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-2xl uppercase">
+                  {s.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-black/70">{s.body}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {s.tags.map((t) => (
+                    <span key={t} className="border border-black/30 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* process */}
+        <section id="process" className="scroll-mt-24 border-t-2 border-black py-20">
+          <div className="mb-10">
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">how we work</div>
+            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Four passes</h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {process.map((p, i) => {
+              const colors = [INK, PINK, BLUE, INK];
+              return (
+                <div key={p.step} data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }} className="relative border-2 border-black p-6">
+                  <div className="absolute right-4 top-4 h-6 w-6 rounded-full" style={{ background: colors[i] }} />
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">pass {i + 1}</div>
+                  <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-2xl uppercase">{p.step}</h3>
+                  <p className="mt-2 text-sm font-bold leading-snug">{p.title}</p>
+                  <p className="mt-2 text-xs leading-relaxed text-black/60">{p.body}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* team */}
+        <section id="team" className="scroll-mt-24 border-t-2 border-black py-20">
+          <div className="mb-10">
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">masthead</div>
+            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">The studio</h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {team.map((t, i) => (
+              <div key={t.name} data-reveal style={{ ["--reveal-delay" as string]: `${i * 70}ms` }} className="relative overflow-hidden border-2 border-black">
+                {t.img ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={t.img} alt={t.name} className="h-56 w-full object-cover" style={{ filter: "contrast(1.05) saturate(0.9)" }} />
+                ) : (
+                  <div
+                    className="flex h-56 w-full items-center justify-center text-6xl"
+                    style={{ fontFamily: "var(--font-display)", background: i % 2 ? BLUE : PINK, color: PAPER }}
+                  >
+                    {initials(t.name)}
+                  </div>
+                )}
+                <Halftone color={PINK} size={6} opacity={0.18} />
+                <div className="p-5">
+                  <h3 style={{ fontFamily: "var(--font-display)" }} className="text-3xl uppercase">{t.name}</h3>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[#ff2d6f]">{t.role}</div>
+                  <p className="mt-3 text-sm leading-relaxed text-black/70">{t.bio}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* testimonials */}
+        <section className="border-t-2 border-black py-20">
+          <div className="mb-10">
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">blurbs</div>
+            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">From the clients</h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {testimonials.map((t, i) => (
+              <figure key={t.name} data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }} className="border-2 border-black bg-[#f6f1e7] p-6">
+                <div className="text-4xl leading-none" style={{ color: i % 2 ? BLUE : PINK }}>“</div>
+                <blockquote style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-lg uppercase leading-tight">
+                  {t.quote}
+                </blockquote>
+                <figcaption className="mt-5 text-[10px] font-bold uppercase tracking-widest text-black/50">
+                  {t.name} · {t.title}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="border-t-2 border-black py-20">
+          <div className="mb-10">
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">fine print</div>
+            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Questions</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {faqs.map((f, i) => (
+              <details key={f.q} data-reveal style={{ ["--reveal-delay" as string]: `${i * 60}ms` }} className="group border-2 border-black bg-[#f6f1e7] p-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                  <span style={{ fontFamily: "var(--font-display)" }} className="text-lg uppercase">{f.q}</span>
+                  <span className="text-2xl text-[#1b3cff] transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-black/70">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        {/* contact */}
+        <section id="contact" className="scroll-mt-24 border-t-2 border-black py-20">
+          <div className="relative overflow-hidden border-2 border-black bg-[#111] p-8 text-[#f6f1e7] sm:p-12">
+            <Halftone color={PAPER} size={9} opacity={0.06} />
+            <div className="relative grid gap-8 lg:grid-cols-2">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">{studio.cta}</div>
+                <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-3 text-5xl uppercase leading-none">
+                  Hand us the <span className="text-[#ff2d6f]">brief.</span>
+                </h2>
+                <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
+                  Tell us what you’re trying to automate. We’ll come back with a
+                  fixed scope, a price, and the audit, cost, and latency targets
+                  we’ll hit — usually within two working days.
+                </p>
+                <div className="mt-6 text-[10px] font-bold uppercase tracking-widest text-white/50">
+                  {studio.location} · {studio.wordmark}
+                </div>
+              </div>
+              <div className="flex flex-col justify-center gap-4">
+                <a href={`mailto:${studio.email}`} className="group flex items-center justify-between border-2 border-white px-5 py-4 text-sm font-bold uppercase tracking-widest transition hover:bg-[#ff2d6f] hover:text-[#111]">
+                  {studio.email} <span>▸</span>
+                </a>
+                <a href={studio.upwork} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between border-2 border-white/30 px-5 py-4 text-sm font-bold uppercase tracking-widest text-white/70 transition hover:border-white hover:text-white">
+                  Message us on Upwork <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
+
+      <Footer />
     </div>
+  );
+}
+
+function Nav() {
+  return (
+    <nav className="sticky top-0 z-40 border-b-2 border-black bg-[#f6f1e7]/95 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10">
+        <a href="#top" style={{ fontFamily: "var(--font-display)" }} className="text-sm uppercase tracking-[0.2em] hover:text-[#ff2d6f]">
+          {studio.wordmark}
+        </a>
+        <div className="hidden gap-6 text-[10px] font-bold uppercase tracking-widest sm:flex">
+          <a href="#services" className="hover:text-[#1b3cff]">services</a>
+          <a href="#work" className="hover:text-[#1b3cff]">work</a>
+          <a href="#process" className="hover:text-[#1b3cff]">process</a>
+          <a href="#team" className="hover:text-[#1b3cff]">team</a>
+          <a href="#contact" className="hover:text-[#1b3cff]">contact</a>
+        </div>
+        <a href="#contact" className="bg-[#111] px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[#f6f1e7] transition hover:bg-[#ff2d6f]">
+          {studio.cta}
+        </a>
+      </div>
+    </nav>
+  );
+}
+
+function Footer() {
+  return (
+    <footer id="top" className="border-t-2 border-black bg-[#f6f1e7]">
+      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 sm:px-10 md:grid-cols-3">
+        <div>
+          <div style={{ fontFamily: "var(--font-display)" }} className="text-xl uppercase">{studio.wordmark}</div>
+          <p className="mt-3 max-w-xs text-sm leading-relaxed text-black/60">{studio.tagline}</p>
+        </div>
+        <div className="text-sm">
+          <div className="text-[10px] font-bold uppercase tracking-widest text-black/40">Get in touch</div>
+          <a href={`mailto:${studio.email}`} className="mt-2 block font-bold hover:text-[#ff2d6f]">{studio.email}</a>
+          <a href={studio.upwork} target="_blank" rel="noopener noreferrer" className="mt-1 block text-black/60 hover:text-[#1b3cff]">Upwork →</a>
+          <div className="mt-2 text-black/50">{studio.location}</div>
+        </div>
+        <div className="text-sm">
+          <div className="text-[10px] font-bold uppercase tracking-widest text-black/40">Navigate</div>
+          <div className="mt-2 flex flex-col gap-1 text-black/60">
+            <a href="#services" className="hover:text-[#1b3cff]">Services</a>
+            <a href="#work" className="hover:text-[#1b3cff]">Work</a>
+            <a href="#process" className="hover:text-[#1b3cff]">Process</a>
+            <a href="#team" className="hover:text-[#1b3cff]">Team</a>
+            <a href="#contact" className="hover:text-[#1b3cff]">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div className="border-t border-black/10 px-6 py-6 text-center text-[10px] font-bold uppercase tracking-widest text-black/40 sm:px-10">
+        © {new Date().getFullYear()} {studio.name} · {studio.trust}
+      </div>
+    </footer>
   );
 }
