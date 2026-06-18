@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Archivo_Black, Space_Grotesk } from "next/font/google";
 import {
   faqs,
@@ -295,6 +295,22 @@ export default function Home() {
                           </li>
                         ))}
                       </ul>
+                      {p.links && p.links.length > 0 && (
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {p.links.map((l) => (
+                            <a
+                              key={l.url}
+                              href={l.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ ["--link-hover" as string]: isPink ? PINK : BLUE }}
+                              className="inline-flex items-center gap-1.5 border-2 border-black bg-[#f6f1e7] px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 hover:bg-[var(--link-hover)] hover:text-[#f6f1e7]"
+                            >
+                              {l.label} <span aria-hidden>↗</span>
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </article>
@@ -340,31 +356,18 @@ export default function Home() {
           </div>
         </section>
 
-        {/* process */}
+        {/* process — animated live press run */}
         <section id="process" className="scroll-mt-24 border-t-2 border-black py-20">
-          <div className="mb-10">
-            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">how we work</div>
-            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Four passes</h2>
+          <div className="mb-10 flex items-end justify-between">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">how we work</div>
+              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">A press run</h2>
+            </div>
+            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-black/40 sm:block">
+              four passes · one shipped build
+            </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {process.map((p, i) => {
-              const colors = [INK, PINK, BLUE, INK];
-              return (
-                <div
-                  key={p.step}
-                  data-reveal
-                  style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
-                  className="group relative border-2 border-black p-6 transition-colors duration-300 hover:border-[#1b3cff] hover:bg-[#1b3cff]/[0.06]"
-                >
-                  <div className="absolute right-4 top-4 h-6 w-6 rounded-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-150" style={{ background: colors[i] }} />
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">pass {i + 1}</div>
-                  <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-2xl uppercase transition-colors duration-300 group-hover:text-[#ff2d6f]">{p.step}</h3>
-                  <p className="mt-2 text-sm font-bold leading-snug">{p.title}</p>
-                  <p className="mt-2 text-xs leading-relaxed text-black/60">{p.body}</p>
-                </div>
-              );
-            })}
-          </div>
+          <WorkflowCard />
         </section>
 
         {/* team */}
@@ -480,6 +483,166 @@ export default function Home() {
       </main>
 
       <Footer />
+    </div>
+  );
+}
+
+/** Animated "press run" — auto-cycles through the 4 process steps.
+ *  A progress bar fills in lockstep with the active step, the step
+ *  node scales/colors, and the detail block fades in on each change.
+ *  Respects prefers-reduced-motion. */
+const STEP_MS = 2600;
+const NODE_COLORS = [INK, PINK, BLUE, INK];
+
+function WorkflowCard() {
+  const [step, setStep] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (media.matches) return;
+    if (paused) return;
+    const id = window.setInterval(() => {
+      setStep((s) => (s + 1) % process.length);
+    }, STEP_MS);
+    return () => window.clearInterval(id);
+  }, [paused]);
+
+  const current = process[step];
+
+  return (
+    <div
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      style={{ ["--workflow-step-ms" as string]: `${STEP_MS}ms` }}
+      className="relative overflow-hidden border-2 border-black bg-[#f6f1e7] shadow-[8px_8px_0_0_#111]"
+    >
+      <Halftone color={INK} size={9} opacity={0.1} />
+      <div className="relative p-6 sm:p-10">
+        {/* header bar */}
+        <div className="mb-8 flex items-center justify-between border-b border-black/15 pb-4">
+          <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black/70">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff2d6f] opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#ff2d6f]" />
+            </span>
+            <span>live · workflow</span>
+            <span className="text-black/30">·</span>
+            <span className="text-black/60">pass {String(step + 1).padStart(2, "0")} of {String(process.length).padStart(2, "0")}</span>
+          </div>
+          <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black/40">
+            <span className="hidden sm:inline">{paused ? "paused · hover" : "auto · loop"}</span>
+            <span className="font-mono text-black/60">{(step + 1).toString().padStart(2, "0")}/{process.length.toString().padStart(2, "0")}</span>
+          </div>
+        </div>
+
+        {/* step nodes */}
+        <div className="relative">
+          <div className="pointer-events-none absolute left-3 right-3 top-3 h-px bg-black/15" />
+          <div className="relative grid grid-cols-4 gap-2">
+            {process.map((p, i) => {
+              const isActive = i === step;
+              const isPast = i < step;
+              return (
+                <button
+                  key={p.step}
+                  type="button"
+                  onClick={() => setStep(i)}
+                  className="group flex flex-col items-center focus:outline-none"
+                >
+                  <span
+                    className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isActive
+                        ? "scale-125 border-black shadow-[0_0_0_4px_rgba(255,45,111,0.15)]"
+                        : isPast
+                          ? "border-black"
+                          : "border-black/30 group-hover:border-black/60"
+                    }`}
+                    style={{
+                      background: isActive ? PINK : isPast ? BLUE : PAPER,
+                    }}
+                  >
+                    {isActive && <span className="h-1.5 w-1.5 rounded-full bg-[#f6f1e7]" />}
+                  </span>
+                  <span
+                    className={`mt-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-500 ${
+                      isActive ? "text-black" : isPast ? "text-black/70" : "text-black/30 group-hover:text-black/60"
+                    }`}
+                  >
+                    {p.step}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* progress bar */}
+        <div className="mt-6 h-1 w-full overflow-hidden bg-black/10">
+          <div key={step} className="workflow-bar h-full bg-[#ff2d6f]" />
+        </div>
+
+        {/* step detail — keyed so each step re-mounts and fades in */}
+        <div
+          key={step}
+          className="workflow-fade mt-10 grid gap-6 sm:grid-cols-12"
+        >
+          <div className="sm:col-span-3">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+              pass {String(step + 1).padStart(2, "0")}
+            </div>
+            <h3
+              style={{ fontFamily: "var(--font-display)" }}
+              className="mt-2 text-4xl uppercase leading-none sm:text-5xl"
+            >
+              {current.step}
+            </h3>
+            <div className="mt-3 inline-block bg-[#1b3cff] px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-[#f6f1e7]">
+              {current.day}
+            </div>
+          </div>
+          <div className="sm:col-span-6">
+            <p className="text-base font-bold leading-snug text-black sm:text-lg">
+              {current.title}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-black/70">
+              {current.body}
+            </p>
+          </div>
+          <div className="sm:col-span-3">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+              output
+            </div>
+            <div className="mt-1 text-sm font-bold uppercase tracking-widest text-[#ff2d6f]">
+              {current.output}
+            </div>
+            <div className="mt-5 text-[10px] font-bold uppercase tracking-widest text-black/50">
+              pass color
+            </div>
+            <div className="mt-1 flex items-center gap-2">
+              <span
+                className="h-3 w-3 rounded-full"
+                style={{ background: NODE_COLORS[step] }}
+              />
+              <span className="text-xs font-bold uppercase tracking-widest">
+                {step === 0 ? "ink" : step === 1 ? "magenta" : step === 2 ? "cyan" : "ink"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* color proof strip */}
+        <div className="mt-8 flex h-1.5 w-full overflow-hidden border border-black/30">
+          <div className="flex-1 bg-[#ff2d6f]" />
+          <div className="flex-1 bg-[#1b3cff]" />
+          <div className="flex-1 bg-[#111]" />
+        </div>
+        <div className="mt-2 flex items-center justify-between text-[9px] font-bold uppercase tracking-[0.3em] text-black/40">
+          <span>tejas labs · proof card</span>
+          <span>j-001 · auto-tick</span>
+        </div>
+      </div>
     </div>
   );
 }

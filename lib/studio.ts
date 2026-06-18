@@ -63,6 +63,7 @@ export const projects = [
     blurb:
       "A website for a business that connects householders with makers who turn everyday waste into eco-friendly home decor — a marketplace to discover, hire, and collaborate with creators crafting the best out of waste to beautify homes.",
     metrics: ["waste-to-decor", "maker marketplace", "eco-first UX"],
+    links: [{ label: "Visit site", url: "https://ecoroom.vercel.app/" }],
   },
   {
     name: "LearnAI",
@@ -71,6 +72,12 @@ export const projects = [
     blurb:
       "An Android app teaching the fundamentals of AI — core concepts, a searchable glossary of the field's famous terminology, and a live feed of the latest AI news, all in one pocket-sized learning companion.",
     metrics: ["Android-native", "live AI news feed", "interactive glossary"],
+    links: [
+      {
+        label: "Google Play",
+        url: "https://play.google.com/store/apps/details?id=com.lagaryan.learnai",
+      },
+    ],
   },
   {
     name: "Utah Deportation Insights",
@@ -79,6 +86,7 @@ export const projects = [
     blurb:
       "A bilingual English/Spanish insights platform built for Brody covering Utah deportation data — surfacing trends and stories with AI-powered search and summaries for advocates, journalists, and affected communities.",
     metrics: ["bilingual EN/ES", "AI search & summaries", "trend dashboards"],
+    links: [{ label: "Visit site", url: "https://stopdeportationutah.com/" }],
   },
   {
     name: "YouTube Shorts Automation",
@@ -95,6 +103,10 @@ export const projects = [
     blurb:
       "A personal-assistant agent built on OpenClaw and Hermes that automates the day-to-day — handling repetitive tasks and guiding users to automate their own uninteresting chores with AI, turning busywork into reproducible workflows.",
     metrics: ["OpenClaw + Hermes", "daily task automation", "DIY agent guidance"],
+    links: [
+      { label: "OpenClaw", url: "https://openclaw.ai/" },
+      { label: "Hermes", url: "https://hermes-agent.nousresearch.com/" },
+    ],
   },
 ];
 
@@ -103,21 +115,29 @@ export const process = [
     step: "Scope",
     title: "We start with the problem, not the model",
     body: "A scoping call and a written spec with clear audit, cost, and latency targets — agreed before a single line of code.",
+    day: "Day 01",
+    output: "Spec · price · targets",
   },
   {
     step: "Build",
     title: "Ship to a staging URL on day one",
     body: "We build in the real environment: real API keys, real data, observability and tracing from the very first commit.",
+    day: "Day 02–05",
+    output: "Staging URL · logs",
   },
   {
     step: "Harden",
     title: "Production mindset by default",
     body: "Acceptance tests, prompt versioning, PII masking, key vaulting, and cost dashboards — all in place before handoff.",
+    day: "Day 06–14",
+    output: "Audit pass · dashboards",
   },
   {
     step: "Run",
     title: "Retainers for ongoing improvement",
     body: "We stay on for prompt and tool refinement, eval monitoring, and rapid iteration as your business changes.",
+    day: "Day 15+",
+    output: "Live · retainer",
   },
 ];
 
