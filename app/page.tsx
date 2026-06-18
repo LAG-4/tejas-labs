@@ -59,15 +59,6 @@ function Overprint({ children, className = "" }: { children: React.ReactNode; cl
   );
 }
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
 /** Soft tinted disk that trails the cursor; fades out when the mouse is idle. */
 function MouseSpotlight() {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -375,26 +366,19 @@ export default function Home() {
                 key={t.name}
                 data-reveal
                 style={{ ["--reveal-delay" as string]: `${i * 70}ms` }}
-                className="team-card group relative overflow-hidden border-2 border-black transition-colors duration-300 hover:border-[#ff2d6f]"
+                className="team-card group relative flex flex-col overflow-hidden border-2 border-black transition-colors duration-300 hover:border-[#ff2d6f]"
               >
-                <div className="aspect-[4/5] w-full overflow-hidden bg-[#eee5d3]">
-                  {t.img ? (
-                    // eslint-disable-next-line @next/next/no-img-element
+                {t.img && (
+                  <div className="aspect-[4/5] w-full overflow-hidden bg-[#eee5d3]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={t.img}
                       alt={t.name}
                       className="h-full w-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
                       style={{ filter: "contrast(1.05) saturate(0.9)" }}
                     />
-                  ) : (
-                    <div
-                      className="flex h-full w-full items-center justify-center text-7xl"
-                      style={{ fontFamily: "var(--font-display)", background: i % 2 ? BLUE : PINK, color: PAPER }}
-                    >
-                      {initials(t.name)}
-                    </div>
-                  )}
-                </div>
+                  </div>
+                )}
                 <div className="p-5">
                   <h3 style={{ fontFamily: "var(--font-display)" }} className="text-3xl uppercase">{t.name}</h3>
                   <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[#ff2d6f]">{t.role}</div>
