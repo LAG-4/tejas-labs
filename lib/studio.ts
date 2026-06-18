@@ -57,36 +57,44 @@ export const services = [
 
 export const projects = [
   {
-    name: "Chhattisgarh Govt",
+    name: "Ecoroom",
     year: "2025",
-    discipline: "Public-sector AI",
+    discipline: "Sustainable marketplace",
     blurb:
-      "A multilingual RAG knowledge assistant for a Government of Chhattisgarh department — answering citizen and staff queries over policy docs and schemes, with audit-ready logs.",
-    metrics: ["12k+ queries/mo", "3 languages", "audit-ready logs"],
+      "A website for a business that connects householders with makers who turn everyday waste into eco-friendly home decor — a marketplace to discover, hire, and collaborate with creators crafting the best out of waste to beautify homes.",
+    metrics: ["waste-to-decor", "maker marketplace", "eco-first UX"],
   },
   {
-    name: "Tekmetric + Shopify",
+    name: "LearnAI",
+    year: "2024",
+    discipline: "Mobile learning app",
+    blurb:
+      "An Android app teaching the fundamentals of AI — core concepts, a searchable glossary of the field's famous terminology, and a live feed of the latest AI news, all in one pocket-sized learning companion.",
+    metrics: ["Android-native", "live AI news feed", "interactive glossary"],
+  },
+  {
+    name: "Utah Deportation Insights",
     year: "2025",
-    discipline: "E-commerce automation",
+    discipline: "Bilingual data platform",
     blurb:
-      "An agent that triages orders, syncs inventory, and replies to customers across Shopify and GHL for an auto-parts retailer — replacing a fragile Zapier chain.",
-    metrics: ["-60% manual ops", "2.3× faster replies", "1 pipeline, not 12"],
+      "A bilingual English/Spanish insights platform built for Brody covering Utah deportation data — surfacing trends and stories with AI-powered search and summaries for advocates, journalists, and affected communities.",
+    metrics: ["bilingual EN/ES", "AI search & summaries", "trend dashboards"],
   },
   {
-    name: "HIPAA RAG Assistant",
-    year: "2024",
-    discipline: "Healthcare AI",
+    name: "YouTube Shorts Automation",
+    year: "2025",
+    discipline: "Content automation",
     blurb:
-      "Clinical knowledge retrieval over private documentation with PII masking, data-residency controls, and a full audit trail. Built to pass a compliance review.",
-    metrics: ["HIPAA-aligned", "PII masked", "0 data egress"],
+      "An n8n pipeline that auto-generates and schedules YouTube Shorts for any niche — generating clips and posting on a cadence, with a Google Sheets database tracking every video and its analytics as the single source of truth.",
+    metrics: ["n8n pipeline", "Google Sheets DB", "any-niche scheduling"],
   },
   {
-    name: "HubSpot + n8n Engine",
+    name: "OpenClaw / Hermes Agent",
     year: "2024",
-    discipline: "CRM automation",
+    discipline: "Personal AI agent",
     blurb:
-      "Replaced a costly Zapier sprawl with a cost-engineered n8n + LangGraph pipeline syncing HubSpot and GHL in real time, with eval monitoring on every run.",
-    metrics: ["-70% integration cost", "real-time sync", "eval-monitored"],
+      "A personal-assistant agent built on OpenClaw and Hermes that automates the day-to-day — handling repetitive tasks and guiding users to automate their own uninteresting chores with AI, turning busywork into reproducible workflows.",
+    metrics: ["OpenClaw + Hermes", "daily task automation", "DIY agent guidance"],
   },
 ];
 
@@ -133,7 +141,7 @@ export const team = [
     bio: "Builds and ships the models — from prompt engineering to agentic workflows, evals, and the inference layer behind every product.",
   },
   {
-    name: "Nithin",
+    name: "Nitin",
     role: "Backend Dev · Full-Stack",
     img: undefined,
     bio: "Owns the backend, APIs, and the full-stack glue — data pipelines, Docker/K8s deployment, and the observability that keeps everything accountable.",
