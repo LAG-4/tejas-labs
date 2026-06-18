@@ -137,7 +137,7 @@ export default function Home() {
             </div>
             <h1
               style={{ fontFamily: "var(--font-display)" }}
-              className="text-[clamp(2.8rem,9vw,7rem)] uppercase leading-[0.86] tracking-tight"
+              className="text-[clamp(2.4rem,7vw,5.5rem)] uppercase leading-[0.86] tracking-tight"
             >
               We ship AI that
               <br />
@@ -360,7 +360,7 @@ export default function Home() {
             <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">masthead</div>
             <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">The studio</h2>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2">
             {team.map((t, i) => (
               <div
                 key={t.name}
