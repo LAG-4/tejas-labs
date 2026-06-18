@@ -7,8 +7,8 @@ export const studio = {
     "Production-ready AI automation, agentic workflows, and full-stack AI applications.",
   blurb:
     "We build AI that doesn’t just demo well — it runs in your business. RAG systems, custom GPT agents, and full-stack AI apps that pass audits, cut costs, and scale. Trusted by the Government of Chhattisgarh.",
-  email: "hello@tejaslabs.ai",
-  upwork: "https://www.upwork.com/",
+  email: "tejaslabs0028@gmail.com",
+  upwork: "https://www.upwork.com/agencies/2066396595594354942/",
   location: "Raipur, India · GMT+5:30",
   founded: 2021,
   cta: "Start a project",
@@ -17,7 +17,7 @@ export const studio = {
 
 export const stats = [
   { value: "30+", label: "projects shipped" },
-  { value: "4+", label: "years in production AI" },
+  { value: "6 mo", label: "in production AI" },
   { value: "3", label: "specialists, no handoffs" },
   { value: "∞", label: "iterations until it ships" },
 ];
