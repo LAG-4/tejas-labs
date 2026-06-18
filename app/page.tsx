@@ -177,23 +177,36 @@ export default function Home() {
                   <span>{studio.wordmark}</span>
                   <span>EST. {studio.founded}</span>
                 </div>
-                <div className="relative mt-6 h-[58%]">
+                <div className="mt-5 flex h-2 w-full overflow-hidden border border-black/40">
+                  <div className="flex-1 bg-[#ff2d6f]" />
+                  <div className="flex-1 bg-[#1b3cff]" />
+                  <div className="flex-1 bg-[#111]" />
+                  <div className="flex-1 bg-[#f6f1e7]" />
+                </div>
+                <div className="relative mt-8 flex h-[55%] flex-col items-center justify-center">
                   <div
-                    className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff2d6f] transition-transform duration-200 ease-out"
+                    className="relative h-36 w-36 transition-transform duration-200 ease-out"
                     style={{
-                      mixBlendMode: "multiply",
-                      transform: `translate(calc(-50% + ${reduced ? 0 : mouse.x * 28}px), calc(-50% + ${reduced ? 0 : mouse.y * 28}px))`,
+                      transform: `translate(${reduced ? 0 : mouse.x * 14}px, ${reduced ? 0 : mouse.y * 14}px)`,
                     }}
-                  />
-                  <div
-                    className="absolute left-[58%] top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1b3cff] transition-transform duration-200 ease-out"
-                    style={{
-                      mixBlendMode: "multiply",
-                      transform: `translate(calc(-50% + ${reduced ? 0 : mouse.x * -28}px), calc(-50% + ${reduced ? 0 : mouse.y * -28}px))`,
-                    }}
-                  />
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[10px] font-bold uppercase tracking-widest text-[#f6f1e7]">
-                    AI that<br />runs
+                  >
+                    <div className="absolute inset-0 rounded-full border-2 border-black" />
+                    <div className="absolute inset-3 rounded-full border border-black/60" />
+                    <div className="absolute inset-6 rounded-full border border-[#ff2d6f]" />
+                    <div className="absolute inset-9 rounded-full border border-[#1b3cff]" />
+                    <div className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-black" />
+                    <div className="absolute bottom-0 left-1/2 h-4 w-px -translate-x-1/2 bg-black" />
+                    <div className="absolute left-0 top-1/2 h-px w-4 -translate-y-1/2 bg-black" />
+                    <div className="absolute right-0 top-1/2 h-px w-4 -translate-y-1/2 bg-black" />
+                    <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#111]" />
+                  </div>
+                  <div className="mt-6 text-center">
+                    <div className="text-[9px] font-bold uppercase tracking-[0.3em] text-black/50">
+                      specimen · no. 01
+                    </div>
+                    <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-black/70">
+                      proof / approved
+                    </div>
                   </div>
                 </div>
                 <div style={{ fontFamily: "var(--font-display)" }} className="absolute bottom-5 left-5 right-5 text-2xl uppercase leading-none">
