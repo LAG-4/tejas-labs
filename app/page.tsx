@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Archivo_Black, Space_Grotesk } from "next/font/google";
 import {
   faqs,
@@ -12,7 +13,7 @@ import {
   techStack,
   testimonials,
 } from "@/lib/studio";
-import { useAutoReveal, useScrollProgress } from "@/lib/hooks";
+import { useAutoReveal, useMouseParallax, useReducedMotion, useScrollProgress } from "@/lib/hooks";
 
 const display = Archivo_Black({ weight: "400", subsets: ["latin"], variable: "--font-display", display: "swap" });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -58,9 +59,50 @@ function Overprint({ children, className = "" }: { children: React.ReactNode; cl
   );
 }
 
+function initials(name: string) {
+  return name
+    .split(" ")
+    .map((p) => p[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+/** Soft tinted disk that trails the cursor; fades out when the mouse is idle. */
+function MouseSpotlight() {
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    let idleTimer = 0;
+    const onMove = (e: MouseEvent) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.setProperty("--mx", `${e.clientX}px`);
+        el.style.setProperty("--my", `${e.clientY}px`);
+        el.classList.add("is-active");
+      });
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => el.classList.remove("is-active"), 1400);
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf);
+      window.clearTimeout(idleTimer);
+    };
+  }, []);
+
+  return <div ref={ref} className="mouse-spotlight" aria-hidden />;
+}
+
 export default function Home() {
   useAutoReveal();
   const progress = useScrollProgress();
+  const mouse = useMouseParallax(1);
+  const reduced = useReducedMotion();
 
   return (
     <div
@@ -72,6 +114,9 @@ export default function Home() {
         <div className="h-full bg-[#ff2d6f]" style={{ width: `${progress * 100}%` }} />
         <div className="h-full flex-1 bg-[#1b3cff]/15" />
       </div>
+
+      {/* cursor spotlight — follows the mouse, tinted disk that fades on idle */}
+      {!reduced && <MouseSpotlight />}
 
       <Nav />
 
@@ -142,8 +187,20 @@ export default function Home() {
                   <span>EST. {studio.founded}</span>
                 </div>
                 <div className="relative mt-6 h-[58%]">
-                  <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff2d6f]" style={{ mixBlendMode: "multiply" }} />
-                  <div className="absolute left-[58%] top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1b3cff]" style={{ mixBlendMode: "multiply" }} />
+                  <div
+                    className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff2d6f] transition-transform duration-200 ease-out"
+                    style={{
+                      mixBlendMode: "multiply",
+                      transform: `translate(calc(-50% + ${reduced ? 0 : mouse.x * 28}px), calc(-50% + ${reduced ? 0 : mouse.y * 28}px))`,
+                    }}
+                  />
+                  <div
+                    className="absolute left-[58%] top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1b3cff] transition-transform duration-200 ease-out"
+                    style={{
+                      mixBlendMode: "multiply",
+                      transform: `translate(calc(-50% + ${reduced ? 0 : mouse.x * -28}px), calc(-50% + ${reduced ? 0 : mouse.y * -28}px))`,
+                    }}
+                  />
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[10px] font-bold uppercase tracking-widest text-[#f6f1e7]">
                     AI that<br />runs
                   </div>
@@ -159,11 +216,17 @@ export default function Home() {
         {/* stats */}
         <section className="grid grid-cols-2 gap-px border-2 border-black bg-black lg:grid-cols-4">
           {stats.map((s) => (
-            <div key={s.label} className="bg-[#f6f1e7] p-6">
-              <div style={{ fontFamily: "var(--font-display)" }} className="text-5xl text-[#1b3cff]">
+            <div
+              key={s.label}
+              className="stat-cell group bg-[#f6f1e7] p-6 transition-colors duration-300 hover:bg-[#111]"
+            >
+              <div
+                style={{ fontFamily: "var(--font-display)" }}
+                className="text-5xl text-[#1b3cff] transition-colors duration-300 group-hover:text-[#ff2d6f]"
+              >
                 {s.value}
               </div>
-              <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-black/60">
+              <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-black/60 transition-colors duration-300 group-hover:text-[#f6f1e7]/70">
                 {s.label}
               </div>
             </div>
@@ -178,23 +241,24 @@ export default function Home() {
               <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Selected prints</h2>
             </div>
             <div className="hidden text-[10px] font-bold uppercase tracking-widest text-black/40 sm:block">
-              printed in sequence
+              sheets stack as you scroll
             </div>
           </div>
 
-          <div className="relative space-y-8">
+          <div className="relative space-y-6">
             {projects.map((p, i) => {
-              const rot = i % 2 === 0 ? -1 : 1;
+              const rot = i % 2 === 0 ? -1.4 : 1.2;
               const isPink = i % 2 === 0;
               return (
                 <article
                   key={p.name}
                   data-reveal
                   style={{
-                    transform: `rotate(${rot}deg)`,
+                    top: `${80 + i * 26}px`,
+                    ["--rot" as string]: `${rot}deg`,
                     ["--reveal-delay" as string]: `${i * 60}ms`,
                   }}
-                  className="overflow-hidden border-2 border-black bg-[#f6f1e7] shadow-[8px_8px_0_0_#111]"
+                  className="press-sheet sticky overflow-hidden border-2 border-black bg-[#f6f1e7] shadow-[8px_8px_0_0_#111]"
                 >
                   <Halftone color={isPink ? PINK : BLUE} size={12} opacity={0.1} />
                   <div className="relative grid gap-6 p-6 sm:p-10 md:grid-cols-12">
@@ -250,19 +314,19 @@ export default function Home() {
                 key={s.n}
                 data-reveal
                 style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}
-                className={`group relative overflow-hidden border-2 border-black p-6 ${i === services.length - 1 ? "md:col-span-2" : ""}`}
+                className={`group relative overflow-hidden border-2 border-black p-6 transition-colors duration-300 hover:border-[#ff2d6f] hover:bg-[#ff2d6f]/[0.06] ${i === services.length - 1 ? "md:col-span-2" : ""}`}
               >
-                <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#1b3cff]">
+                <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#1b3cff] transition-colors duration-300 group-hover:text-[#ff2d6f]">
                   <span>{s.n}</span>
-                  <span className="h-px flex-1 bg-black/20" />
+                  <span className="h-px flex-1 bg-black/20 transition-colors duration-300 group-hover:bg-[#ff2d6f]/40" />
                 </div>
-                <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-2xl uppercase">
+                <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-2xl uppercase transition-colors duration-300 group-hover:text-[#1b3cff]">
                   {s.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-black/70">{s.body}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {s.tags.map((t) => (
-                    <span key={t} className="border border-black/30 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest">
+                    <span key={t} className="border border-black/30 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 group-hover:border-black/60">
                       {t}
                     </span>
                   ))}
@@ -282,10 +346,15 @@ export default function Home() {
             {process.map((p, i) => {
               const colors = [INK, PINK, BLUE, INK];
               return (
-                <div key={p.step} data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }} className="relative border-2 border-black p-6">
-                  <div className="absolute right-4 top-4 h-6 w-6 rounded-full" style={{ background: colors[i] }} />
+                <div
+                  key={p.step}
+                  data-reveal
+                  style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
+                  className="group relative border-2 border-black p-6 transition-colors duration-300 hover:border-[#1b3cff] hover:bg-[#1b3cff]/[0.06]"
+                >
+                  <div className="absolute right-4 top-4 h-6 w-6 rounded-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-150" style={{ background: colors[i] }} />
                   <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">pass {i + 1}</div>
-                  <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-2xl uppercase">{p.step}</h3>
+                  <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-2xl uppercase transition-colors duration-300 group-hover:text-[#ff2d6f]">{p.step}</h3>
                   <p className="mt-2 text-sm font-bold leading-snug">{p.title}</p>
                   <p className="mt-2 text-xs leading-relaxed text-black/60">{p.body}</p>
                 </div>
@@ -300,14 +369,32 @@ export default function Home() {
             <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">masthead</div>
             <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">The studio</h2>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {team.map((t, i) => (
-              <div key={t.name} data-reveal style={{ ["--reveal-delay" as string]: `${i * 70}ms` }} className="relative overflow-hidden border-2 border-black">
+              <div
+                key={t.name}
+                data-reveal
+                style={{ ["--reveal-delay" as string]: `${i * 70}ms` }}
+                className="team-card group relative overflow-hidden border-2 border-black transition-colors duration-300 hover:border-[#ff2d6f]"
+              >
                 <div className="aspect-[4/5] w-full overflow-hidden bg-[#eee5d3]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={t.img} alt={t.name} className="h-full w-full object-cover object-top" style={{ filter: "contrast(1.05) saturate(0.9)" }} />
+                  {t.img ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={t.img}
+                      alt={t.name}
+                      className="h-full w-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                      style={{ filter: "contrast(1.05) saturate(0.9)" }}
+                    />
+                  ) : (
+                    <div
+                      className="flex h-full w-full items-center justify-center text-7xl"
+                      style={{ fontFamily: "var(--font-display)", background: i % 2 ? BLUE : PINK, color: PAPER }}
+                    >
+                      {initials(t.name)}
+                    </div>
+                  )}
                 </div>
-                <Halftone color={PINK} size={6} opacity={0.18} />
                 <div className="p-5">
                   <h3 style={{ fontFamily: "var(--font-display)" }} className="text-3xl uppercase">{t.name}</h3>
                   <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[#ff2d6f]">{t.role}</div>
@@ -326,8 +413,13 @@ export default function Home() {
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {testimonials.map((t, i) => (
-              <figure key={t.name} data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }} className="border-2 border-black bg-[#f6f1e7] p-6">
-                <div className="text-4xl leading-none" style={{ color: i % 2 ? BLUE : PINK }}>“</div>
+              <figure
+                key={t.name}
+                data-reveal
+                style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
+                className="group border-2 border-black bg-[#f6f1e7] p-6 transition-colors duration-300 hover:border-[#ff2d6f]"
+              >
+                <div className="text-4xl leading-none transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1" style={{ color: i % 2 ? BLUE : PINK }}>“</div>
                 <blockquote style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-lg uppercase leading-tight">
                   {t.quote}
                 </blockquote>

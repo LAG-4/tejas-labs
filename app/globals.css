@@ -195,3 +195,54 @@ body {
   outline: 2px solid currentColor;
   outline-offset: 3px;
 }
+
+/* ----------------------------------------------------------------
+   Press sheets — sticky stacking cards in "Selected prints".
+   Rotation comes from the --rot inline var so it doesn't fight the
+   reveal animation's opacity; we own the transform here.
+   ---------------------------------------------------------------- */
+.press-sheet[data-reveal] {
+  transform: rotate(var(--rot, 0deg));
+}
+.press-sheet[data-reveal].is-visible {
+  transform: rotate(var(--rot, 0deg));
+}
+.press-sheet {
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.press-sheet:hover {
+  transform: rotate(0deg) translateY(-6px);
+  box-shadow: 14px 14px 0 0 #111;
+  z-index: 5;
+}
+
+/* Cursor spotlight — a soft tinted disk that trails the pointer.
+   Set --mx/--my from JS; fades out when .is-idle. */
+.mouse-spotlight {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 360px;
+  margin: -180px 0 0 -180px;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 30;
+  background: radial-gradient(circle, rgba(255, 45, 111, 0.16), transparent 62%);
+  mix-blend-mode: multiply;
+  transform: translate3d(var(--mx, 50vw), var(--my, 50vh), 0);
+  transition: opacity 0.6s ease;
+  opacity: 0;
+}
+.mouse-spotlight.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press-sheet:hover {
+    transform: rotate(var(--rot, 0deg));
+  }
+}
