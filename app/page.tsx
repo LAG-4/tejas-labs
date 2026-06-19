@@ -14,6 +14,7 @@ import {
   testimonials,
 } from "@/lib/studio";
 import { useAutoReveal, useMouseParallax, useReducedMotion, useScrollProgress } from "@/lib/hooks";
+import { ContactForm } from "@/components/contact-form";
 
 const display = Archivo_Black({ weight: "400", subsets: ["latin"], variable: "--font-display", display: "swap" });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -451,31 +452,42 @@ export default function Home() {
         </section>
 
         {/* contact */}
-        <section id="contact" className="scroll-mt-24 border-t-2 border-black py-20">
-          <div className="relative overflow-hidden border-2 border-black bg-[#111] p-8 text-[#f6f1e7] sm:p-12">
-            <Halftone color={PAPER} size={9} opacity={0.06} />
-            <div className="relative grid gap-8 lg:grid-cols-2">
-              <div>
-                <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">{studio.cta}</div>
+        <section id="contact" className="scroll-mt-24 border-t-2 border-[var(--border)] py-20">
+          <div className="relative overflow-hidden border-2 border-[var(--invert-border)] bg-[var(--invert-bg)] p-8 text-[var(--invert-text)] sm:p-12">
+            <Halftone color="var(--invert-text)" size={9} opacity={0.06} />
+            <div className="relative grid gap-10 lg:grid-cols-12">
+              <div className="lg:col-span-5">
+                <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">{studio.cta}</div>
                 <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-3 text-5xl uppercase leading-none">
-                  Hand us the <span className="text-[#ff2d6f]">brief.</span>
+                  Hand us the <span className="text-[var(--pink)]">brief.</span>
                 </h2>
-                <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
+                <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--invert-text-soft)]">
                   Tell us what you’re trying to automate. We’ll come back with a
                   fixed scope, a price, and the audit, cost, and latency targets
                   we’ll hit — usually within two working days.
                 </p>
-                <div className="mt-6 text-[10px] font-bold uppercase tracking-widest text-white/50">
+                <div className="mt-6 flex flex-col gap-3 text-[10px] font-bold uppercase tracking-widest">
+                  <a
+                    href={`mailto:${studio.email}`}
+                    className="text-[var(--invert-text-soft)] transition hover:text-[var(--pink)]"
+                  >
+                    {studio.email} <span aria-hidden>↗</span>
+                  </a>
+                  <a
+                    href={studio.upwork}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--invert-text-mute)] transition hover:text-[var(--invert-text)]"
+                  >
+                    Message us on Upwork <span aria-hidden>↗</span>
+                  </a>
+                </div>
+                <div className="mt-6 text-[10px] font-bold uppercase tracking-widest text-[var(--invert-text-mute)]">
                   {studio.location} · {studio.wordmark}
                 </div>
               </div>
-              <div className="flex flex-col justify-center gap-4">
-                <a href={`mailto:${studio.email}`} className="group flex items-center justify-between border-2 border-white px-5 py-4 text-sm font-bold uppercase tracking-widest transition hover:bg-[#ff2d6f] hover:text-[#111]">
-                  {studio.email} <span>▸</span>
-                </a>
-                <a href={studio.upwork} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between border-2 border-white/30 px-5 py-4 text-sm font-bold uppercase tracking-widest text-white/70 transition hover:border-white hover:text-white">
-                  Message us on Upwork <span>↗</span>
-                </a>
+              <div className="lg:col-span-7">
+                <ContactForm />
               </div>
             </div>
           </div>
