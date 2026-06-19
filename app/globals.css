@@ -5,21 +5,94 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* ----------------------------------------------------------------
+   Theme tokens — controlled by [data-theme] on <html>.
+   Light is the default; dark is opt-in via the toggle.
+   Brand accents (pink/blue) stay the same in both modes; ink
+   (the foreground) flips between near-black and warm cream.
+   ---------------------------------------------------------------- */
+:root,
+[data-theme="light"] {
+  --bg: #f6f1e7;
+  --paper: #f6f1e7;
+  --ink: #111111;
+  --ink-soft: rgba(17, 17, 17, 0.7);
+  --ink-mute: rgba(17, 17, 17, 0.5);
+  --ink-faint: rgba(17, 17, 17, 0.4);
+  --ink-softest: rgba(17, 17, 17, 0.3);
+  --ink-ghost: rgba(17, 17, 17, 0.15);
+  --ink-trace: rgba(17, 17, 17, 0.2);
+  --border: #111111;
+  --border-soft: rgba(17, 17, 17, 0.1);
+  --invert-bg: #111111;
+  --invert-text: #f6f1e7;
+  --invert-text-soft: rgba(246, 241, 231, 0.72);
+  --invert-text-mute: rgba(246, 241, 231, 0.52);
+  --invert-border: #f6f1e7;
+  --invert-border-soft: rgba(246, 241, 231, 0.3);
+  --shadow: 8px 8px 0 0 #111111;
+  --shadow-hover: 14px 14px 0 0 #111111;
+  --paper-faint: #eee5d3;
+  --paper-text: #f6f1e7;
+  --pink: #ff2d6f;
+  --blue: #1b3cff;
+  --pink-glow: rgba(255, 45, 111, 0.15);
+  --selection-bg: #111111;
+  --selection-fg: #f6f1e7;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0d0c0a;
+  --paper: #1a1815;
+  --ink: #f0e9da;
+  --ink-soft: rgba(240, 233, 218, 0.72);
+  --ink-mute: rgba(240, 233, 218, 0.52);
+  --ink-faint: rgba(240, 233, 218, 0.42);
+  --ink-softest: rgba(240, 233, 218, 0.3);
+  --ink-ghost: rgba(240, 233, 218, 0.14);
+  --ink-trace: rgba(240, 233, 218, 0.2);
+  --border: #f0e9da;
+  --border-soft: rgba(240, 233, 218, 0.1);
+  --invert-bg: #f0e9da;
+  --invert-text: #111111;
+  --invert-text-soft: rgba(17, 17, 17, 0.72);
+  --invert-text-mute: rgba(17, 17, 17, 0.52);
+  --invert-border: #111111;
+  --invert-border-soft: rgba(17, 17, 17, 0.3);
+  --shadow: 8px 8px 0 0 #f0e9da;
+  --shadow-hover: 14px 14px 0 0 #f0e9da;
+  --paper-faint: #232019;
+  --paper-text: #f0e9da;
+  --pink: #ff2d6f;
+  --blue: #5b7bff;
+  --pink-glow: rgba(255, 45, 111, 0.28);
+  --selection-bg: #f0e9da;
+  --selection-fg: #0d0c0a;
+  color-scheme: dark;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  background: var(--bg);
+  color: var(--ink);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 body {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 ::selection {
-  background: currentColor;
-  color: transparent;
+  background: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 /* Thin, consistent scrollbar across designs */
@@ -101,6 +174,25 @@ body {
   80% {
     transform: translate(4%, -3%);
   }
+}
+
+@keyframes comet-theme-pop {
+  0% {
+    transform: scale(0.6) rotate(-30deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08) rotate(6deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+.theme-icon {
+  animation: comet-theme-pop 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ----------------------------------------------------------------
@@ -264,7 +356,7 @@ body {
 }
 .press-sheet:hover {
   transform: rotate(0deg) translateY(-6px);
-  box-shadow: 14px 14px 0 0 #111;
+  box-shadow: var(--shadow-hover);
   z-index: 5;
 }
 
@@ -286,6 +378,10 @@ body {
   transition: opacity 0.6s ease;
   opacity: 0;
 }
+[data-theme="dark"] .mouse-spotlight {
+  background: radial-gradient(circle, rgba(255, 45, 111, 0.22), transparent 62%);
+  mix-blend-mode: screen;
+}
 .mouse-spotlight.is-active {
   opacity: 1;
 }
@@ -294,4 +390,18 @@ body {
   .press-sheet:hover {
     transform: rotate(var(--rot, 0deg));
   }
+}
+
+/* ----------------------------------------------------------------
+   Overprint (pink + blue offset) headline.
+   On light paper, multiply keeps the layers inky; on dark paper,
+   multiply kills the colour, so we switch to screen there.
+   ---------------------------------------------------------------- */
+[data-theme="light"] .overprint-pink,
+[data-theme="light"] .overprint-blue {
+  mix-blend-mode: multiply;
+}
+[data-theme="dark"] .overprint-pink,
+[data-theme="dark"] .overprint-blue {
+  mix-blend-mode: screen;
 }
