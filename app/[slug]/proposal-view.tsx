@@ -3,15 +3,15 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Archivo_Black, Space_Grotesk } from "next/font/google";
+import { process, stats, studio } from "@/lib/studio";
 import {
-  packages,
-  process,
-  projects,
-  services,
-  stats,
-  studio,
-  testimonials,
-} from "@/lib/studio";
+  about,
+  commitment,
+  coreExpertise,
+  proposedSolutions,
+  techStackCategorized,
+  whyChooseUs,
+} from "@/lib/proposal";
 import {
   useAutoReveal,
   useMouseParallax,
@@ -113,16 +113,6 @@ function MouseSpotlight() {
   return <div ref={ref} className="mouse-spotlight" aria-hidden />;
 }
 
-const SERVICE_LEADS = [
-  "A {C} chatbot that qualifies leads and answers questions 24/7 — on the site, over WhatsApp, over SMS.",
-  "A full GHL build-out for {C}: funnels, pipelines, calendars, and automations wired end-to-end.",
-  "A conversion-first site for {C} that turns visitors into booked calls and CRM entries.",
-  "We'd map {C}'s repetitive busywork and replace it with one clean automated pipeline.",
-  "The dashboard, MVP, or internal tool {C} needs — React, Node, and a real database, deployed on Vercel.",
-  "A cross-platform app for {C} — booking, directory, or community — live on Android and iOS.",
-  "We'd help {C} design the AI layer: prompts, agents, datasets, and RAG — production-ready, not a demo.",
-];
-
 const PROCESS_LEADS = [
   "We start with {C}'s actual problem — not a template.",
   "{C} sees a working version the same week.",
@@ -168,7 +158,7 @@ export function ProposalView({
       <Nav clientName={clientName} mailto={mailto} />
 
       <main className="relative mx-auto max-w-6xl px-6 pb-32 sm:px-10">
-        {/* cover sheet */}
+        {/* ── cover sheet ── */}
         <section className="relative grid gap-10 py-14 lg:grid-cols-12 lg:gap-8">
           <div className="relative lg:col-span-8">
             <div className="mb-6 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">
@@ -180,15 +170,13 @@ export function ProposalView({
               style={{ fontFamily: "var(--font-display)" }}
               className="text-[clamp(2.2rem,6.5vw,5rem)] uppercase leading-[0.86] tracking-tight"
             >
-              A proposal
-              <br />
-              for
+              Proposal for
               <br />
               <Overprint>{clientName}</Overprint>
             </h1>
             <p className="mt-8 max-w-md text-base leading-relaxed text-[var(--ink-soft)]">
               {forClient(
-                "We put this together for {C} — a look at where {C} is today and where it could be with the right software and AI behind it. The work, the timeline, and the price below are all scoped with {C} in mind.",
+                "We put this together for {C} — a look at the AI solutions, automation, and software we'd build to transform how {C} operates. The expertise, proposed solutions, and timeline below are all scoped with {C} in mind.",
               )}
             </p>
             <div className="mt-8 inline-flex items-center gap-3 border-2 border-[var(--border)] bg-[var(--paper)] px-4 py-2 text-xs font-bold uppercase tracking-[0.2em]">
@@ -266,7 +254,7 @@ export function ProposalView({
           </div>
         </section>
 
-        {/* stats */}
+        {/* ── stats ── */}
         <section className="grid grid-cols-2 gap-px border-2 border-[var(--border)] bg-[var(--border)] lg:grid-cols-4">
           {stats.map((s) => (
             <div
@@ -286,14 +274,105 @@ export function ProposalView({
           ))}
         </section>
 
-        {/* what we'd build */}
+        {/* ── about ── */}
         <section
-          id="services"
+          id="about"
+          className="scroll-mt-24 border-t-2 border-[var(--border)] py-20"
+        >
+          <div className="grid gap-8 md:grid-cols-12">
+            <div className="md:col-span-3">
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">
+                who we are
+              </div>
+              <h2
+                style={{ fontFamily: "var(--font-display)" }}
+                className="mt-2 text-4xl uppercase leading-none"
+              >
+                About
+              </h2>
+            </div>
+            <div className="md:col-span-9">
+              <p className="text-base font-bold leading-relaxed text-[var(--ink)]">
+                {about.intro}
+              </p>
+              <div className="mt-6 border-l-2 border-[var(--pink)] pl-5">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--pink)]">
+                  Our mission
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--ink-soft)]">
+                  {about.mission}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── core expertise ── */}
+        <section
+          id="expertise"
           className="scroll-mt-24 border-t-2 border-[var(--border)] py-20"
         >
           <div className="mb-10 flex items-end justify-between">
             <div>
               <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">
+                what we do
+              </div>
+              <h2
+                style={{ fontFamily: "var(--font-display)" }}
+                className="mt-2 text-5xl uppercase"
+              >
+                Core Expertise
+              </h2>
+            </div>
+            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:block">
+              ten disciplines
+            </div>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {coreExpertise.map((cat, i) => (
+              <div
+                key={cat.n}
+                data-reveal
+                style={{ ["--reveal-delay" as string]: `${i * 50}ms` }}
+                className="group relative overflow-hidden border-2 border-[var(--border)] bg-[var(--paper)] p-6 transition-colors duration-300 hover:border-[var(--pink)]"
+              >
+                <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[var(--blue)] transition-colors duration-300 group-hover:text-[var(--pink)]">
+                  <span style={{ fontFamily: "var(--font-display)" }}>{cat.n}</span>
+                  <span className="h-px flex-1 bg-[var(--ink-trace)] transition-colors duration-300 group-hover:bg-[var(--pink)]/40" />
+                </div>
+                <h3
+                  style={{ fontFamily: "var(--font-display)" }}
+                  className="mt-3 text-xl uppercase leading-tight transition-colors duration-300 group-hover:text-[var(--blue)]"
+                >
+                  {cat.title}
+                </h3>
+                <ul className="mt-4 grid gap-1.5">
+                  {cat.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-center gap-2 text-sm text-[var(--ink-soft)]"
+                    >
+                      <span
+                        className="h-1.5 w-1.5 shrink-0"
+                        style={{ background: i % 2 ? "var(--blue)" : "var(--pink)" }}
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── proposed solutions ── */}
+        <section
+          id="solutions"
+          className="scroll-mt-24 border-t-2 border-[var(--border)] py-20"
+        >
+          <div className="mb-10 flex items-end justify-between">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">
                 what we&apos;d build
               </div>
               <h2
@@ -304,123 +383,57 @@ export function ProposalView({
               </h2>
             </div>
             <div className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:block">
-              seven core services
+              seven proposed solutions
             </div>
           </div>
           <p className="mb-8 max-w-2xl text-sm leading-relaxed text-[var(--ink-soft)]">
             {forClient(
-              "If {C} needs it, we build it — and ship it to production. Each service below is something we can tailor to {C} on a scoping call.",
+              "Here's where we'd start with {C}. Each solution can stand alone or combine into a single AI-powered platform — we'd finalize the exact scope on a call.",
             )}
           </p>
           <div className="grid gap-6 md:grid-cols-2">
-            {services.map((s, i) => (
-              <div
-                key={s.n}
-                data-reveal
-                style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}
-                className={`group relative overflow-hidden border-2 border-[var(--border)] p-6 transition-colors duration-300 hover:border-[var(--pink)] hover:bg-[var(--pink)]/[0.06] ${
-                  i === services.length - 1 ? "md:col-span-2" : ""
-                }`}
-              >
-                <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[var(--blue)] transition-colors duration-300 group-hover:text-[var(--pink)]">
-                  <span>{s.n}</span>
-                  <span className="h-px flex-1 bg-[var(--ink-trace)] transition-colors duration-300 group-hover:bg-[var(--pink)]/40" />
-                </div>
-                <h3
-                  style={{ fontFamily: "var(--font-display)" }}
-                  className="mt-4 text-2xl uppercase transition-colors duration-300 group-hover:text-[var(--blue)]"
+            {proposedSolutions.map((sol, i) => {
+              const isPink = i % 2 === 0;
+              return (
+                <article
+                  key={sol.title}
+                  data-reveal
+                  style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}
+                  className={`group relative overflow-hidden border-2 border-[var(--border)] bg-[var(--paper)] p-6 transition-colors duration-300 hover:border-[var(--pink)] ${
+                    i === proposedSolutions.length - 1 ? "md:col-span-2" : ""
+                  }`}
                 >
-                  {s.title}
-                </h3>
-                <p className="mt-2 text-sm font-bold leading-relaxed text-[var(--ink)]">
-                  {forClient(SERVICE_LEADS[i])}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--ink-soft)]">
-                  {s.body}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {s.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="border border-[var(--border-soft)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 group-hover:border-[var(--pink)]/60"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* packages */}
-        <section
-          id="packages"
-          className="scroll-mt-24 border-t-2 border-[var(--border)] py-20"
-        >
-          <div className="mb-10 flex items-end justify-between">
-            <div>
-              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">
-                engagement shapes
-              </div>
-              <h2
-                style={{ fontFamily: "var(--font-display)" }}
-                className="mt-2 text-5xl uppercase"
-              >
-                For {clientName}
-              </h2>
-            </div>
-            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:block">
-              pick a starting point
-            </div>
-          </div>
-          <p className="mb-8 max-w-2xl text-sm leading-relaxed text-[var(--ink-soft)]">
-            {forClient(
-              "Pick the shape that fits {C} best. Every package is a starting point — we'll tailor scope and price to {C} on a call.",
-            )}
-          </p>
-          <div className="grid gap-6 sm:grid-cols-2">
-            {packages.map((p, i) => (
-              <div
-                key={p.tier}
-                data-reveal
-                style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}
-                className="group relative flex flex-col border-2 border-[var(--border)] bg-[var(--paper)] p-6 transition-colors duration-300 hover:border-[var(--pink)]"
-              >
-                <div className="flex items-center justify-between">
-                  <span
-                    style={{ fontFamily: "var(--font-display)" }}
-                    className="text-4xl text-[var(--ink-ghost)]"
-                  >
-                    {p.tier}
-                  </span>
-                  <span className="text-xs font-bold uppercase tracking-widest text-[var(--blue)] transition-colors duration-300 group-hover:text-[var(--pink)]">
-                    {p.price}
-                  </span>
-                </div>
-                <h3
-                  style={{ fontFamily: "var(--font-display)" }}
-                  className="mt-3 text-xl uppercase"
-                >
-                  {p.name}
-                </h3>
-                <ul className="mt-4 flex-1 space-y-2">
-                  {p.items.map((it) => (
-                    <li key={it} className="flex items-start gap-2 text-sm text-[var(--ink-soft)]">
+                  <Halftone color={isPink ? "var(--pink)" : "var(--blue)"} size={12} opacity={0.08} />
+                  <div className="relative">
+                    <div className="flex items-center gap-3">
                       <span
-                        className="mt-1.5 h-2 w-2 shrink-0"
-                        style={{ background: i % 2 ? "var(--blue)" : "var(--pink)" }}
+                        style={{ fontFamily: "var(--font-display)" }}
+                        className="text-4xl leading-none text-[var(--ink-ghost)] transition-colors duration-300 group-hover:text-[var(--pink)]"
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span
+                        className="h-px flex-1"
+                        style={{ background: isPink ? "var(--pink)" : "var(--blue)" }}
                       />
-                      {it}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                    </div>
+                    <h3
+                      style={{ fontFamily: "var(--font-display)" }}
+                      className="mt-3 text-2xl uppercase leading-tight transition-colors duration-300 group-hover:text-[var(--blue)]"
+                    >
+                      {sol.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-[var(--ink-soft)]">
+                      {forClient(sol.body)}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 
-        {/* process timeline */}
+        {/* ── process timeline ── */}
         <section
           id="process"
           className="scroll-mt-24 border-t-2 border-[var(--border)] py-20"
@@ -503,89 +516,14 @@ export function ProposalView({
           </div>
         </section>
 
-        {/* proof — selected work */}
+        {/* ── why choose us ── */}
         <section
-          id="proof"
+          id="why"
           className="scroll-mt-24 border-t-2 border-[var(--border)] py-20"
         >
           <div className="mb-10 flex items-end justify-between">
             <div>
               <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">
-                selected work
-              </div>
-              <h2
-                style={{ fontFamily: "var(--font-display)" }}
-                className="mt-2 text-5xl uppercase"
-              >
-                Proof
-              </h2>
-            </div>
-            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:block">
-              shipped, not mocked
-            </div>
-          </div>
-          <p className="mb-8 max-w-2xl text-sm leading-relaxed text-[var(--ink-soft)]">
-            {forClient("A few things we've shipped for teams like {C}.")}
-          </p>
-          <div className="grid gap-6 md:grid-cols-3">
-            {projects.slice(0, 3).map((p, i) => {
-              const isPink = i % 2 === 0;
-              return (
-                <article
-                  key={p.name}
-                  data-reveal
-                  style={{ ["--reveal-delay" as string]: `${i * 70}ms` }}
-                  className="group flex flex-col border-2 border-[var(--border)] bg-[var(--paper)] p-6 transition-colors duration-300 hover:border-[var(--pink)]"
-                >
-                  <div
-                    className="text-[10px] font-bold uppercase tracking-widest"
-                    style={{ color: isPink ? "var(--pink)" : "var(--blue)" }}
-                  >
-                    {p.discipline}
-                  </div>
-                  <h3
-                    style={{ fontFamily: "var(--font-display)" }}
-                    className="mt-1 text-2xl uppercase leading-none"
-                  >
-                    {p.name}
-                  </h3>
-                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)]">
-                    {p.year}
-                  </div>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--ink-soft)]">
-                    {p.blurb}
-                  </p>
-                  {p.links && p.links.length > 0 && (
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {p.links.map((l) => (
-                        <a
-                          key={l.url}
-                          href={l.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            ["--link-hover" as string]: isPink
-                              ? "var(--pink)"
-                              : "var(--blue)",
-                          }}
-                          className="inline-flex items-center gap-1.5 border-2 border-[var(--border)] bg-[var(--paper)] px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 hover:bg-[var(--link-hover)] hover:text-[var(--paper-text)]"
-                        >
-                          {l.label} <span aria-hidden>↗</span>
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </article>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* why us */}
-        <section className="border-t-2 border-[var(--border)] py-20">
-          <div className="mb-10 flex items-end justify-between">
-            <div>
-              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">
                 the case for us
               </div>
               <h2
@@ -599,37 +537,100 @@ export function ProposalView({
               {studio.trust}
             </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <figure
-                key={t.name}
+          <div className="relative overflow-hidden border-2 border-[var(--border)] bg-[var(--paper)] p-8 sm:p-10">
+            <Halftone color="var(--ink)" size={10} opacity={0.08} />
+            <div className="relative grid gap-4 sm:grid-cols-2">
+              {whyChooseUs.map((reason, i) => (
+                <div
+                  key={reason}
+                  data-reveal
+                  style={{ ["--reveal-delay" as string]: `${i * 50}ms` }}
+                  className="flex items-start gap-3"
+                >
+                  <span
+                    className="mt-0.5 shrink-0 text-lg leading-none"
+                    style={{ color: i % 2 ? "var(--blue)" : "var(--pink)" }}
+                  >
+                    ✦
+                  </span>
+                  <span className="text-sm font-bold leading-snug text-[var(--ink)]">
+                    {reason}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── technology stack ── */}
+        <section
+          id="stack"
+          className="scroll-mt-24 border-t-2 border-[var(--border)] py-20"
+        >
+          <div className="mb-10 flex items-end justify-between">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">
+                what we build on
+              </div>
+              <h2
+                style={{ fontFamily: "var(--font-display)" }}
+                className="mt-2 text-5xl uppercase"
+              >
+                Technology Stack
+              </h2>
+            </div>
+            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:block">
+              production-grade, not experimental
+            </div>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {techStackCategorized.map((group, i) => (
+              <div
+                key={group.category}
                 data-reveal
-                style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
+                style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}
                 className="group border-2 border-[var(--border)] bg-[var(--paper)] p-6 transition-colors duration-300 hover:border-[var(--pink)]"
               >
-                <div
-                  className="text-4xl leading-none transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
-                  style={{ color: i % 2 ? "var(--blue)" : "var(--pink)" }}
-                >
-                  “
+                <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[var(--blue)] transition-colors duration-300 group-hover:text-[var(--pink)]">
+                  <span>{group.category}</span>
+                  <span className="h-px flex-1 bg-[var(--ink-trace)] transition-colors duration-300 group-hover:bg-[var(--pink)]/40" />
                 </div>
-                <blockquote
-                  style={{ fontFamily: "var(--font-display)" }}
-                  className="mt-2 text-lg uppercase leading-tight"
-                >
-                  {t.quote}
-                </blockquote>
-                <figcaption className="mt-5 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)]">
-                  {t.name} · {t.title}
-                </figcaption>
-              </figure>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <span
+                      key={item}
+                      className="border border-[var(--border-soft)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 group-hover:border-[var(--pink)]/60"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* close — prepared exclusively */}
+        {/* ── our commitment ── */}
+        <section className="border-t-2 border-[var(--border)] py-20">
+          <div className="relative overflow-hidden border-2 border-[var(--border)] bg-[var(--paper)] p-8 sm:p-12">
+            <Halftone color="var(--ink)" size={10} opacity={0.08} />
+            <div className="relative mx-auto max-w-2xl text-center">
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">
+                Our Commitment
+              </div>
+              <p className="mt-6 text-base font-bold leading-relaxed text-[var(--ink)]">
+                {forClient(commitment.body)}
+              </p>
+              <p className="mt-4 text-sm leading-relaxed text-[var(--ink-soft)]">
+                {forClient(commitment.closing)}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── contact / CTA ── */}
         <section
-          id="close"
+          id="contact"
           className="scroll-mt-24 border-t-2 border-[var(--border)] py-20"
         >
           <div className="relative overflow-hidden border-2 border-[var(--invert-border)] bg-[var(--invert-bg)] p-8 text-[var(--invert-text)] sm:p-12">
@@ -689,11 +690,11 @@ function Nav({
   mailto: string;
 }) {
   const LINKS = [
-    { href: "#services", label: "Services" },
-    { href: "#packages", label: "Packages" },
+    { href: "#expertise", label: "Expertise" },
+    { href: "#solutions", label: "Solutions" },
     { href: "#process", label: "Process" },
-    { href: "#proof", label: "Work" },
-    { href: "#close", label: "Close" },
+    { href: "#why", label: "Why Us" },
+    { href: "#contact", label: "Contact" },
   ];
   return (
     <nav className="sticky top-0 z-40 border-b-2 border-[var(--border)] bg-[var(--paper)]/95 backdrop-blur">
@@ -740,7 +741,7 @@ function Footer({ clientName }: { clientName: string }) {
             {studio.wordmark}
           </div>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-[var(--ink-soft)]">
-            {studio.tagline}
+            AI · Machine Learning · Cloud · Enterprise Software · Digital Transformation
           </p>
         </div>
         <div className="text-sm">
