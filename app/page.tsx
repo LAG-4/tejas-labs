@@ -453,11 +453,11 @@ export default function Home() {
             <div className="relative flex flex-col items-center justify-center text-center py-10 max-w-xl mx-auto">
               <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">{studio.cta}</div>
               <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-5xl uppercase leading-none">
-                Let's build <span className="text-[var(--pink)]">together.</span>
+                Let&apos;s build <span className="text-[var(--pink)]">together.</span>
               </h2>
               <p className="mt-6 text-sm leading-relaxed text-[var(--invert-text-soft)]">
                 Whether you need an AI chatbot, a GoHighLevel setup, a lead generation website,
-                or a custom SaaS MVP — tell us about your project on Upwork and we'll collaborate
+                or a custom SaaS MVP — tell us about your project on Upwork and we&apos;ll collaborate
                 on a clear scope and price.
               </p>
               <div className="mt-8">

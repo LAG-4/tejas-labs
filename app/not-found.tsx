@@ -49,7 +49,7 @@ export default function NotFound() {
         </h1>
 
         <p className="mt-8 max-w-md text-base leading-relaxed text-[var(--ink-soft)]">
-          The page you're looking for doesn't exist — it may have moved,
+          The page you&apos;re looking for doesn&apos;t exist — it may have moved,
           been removed, or the URL might be incorrect. Head back to the
           homepage, or jump to a section below.
         </p>
