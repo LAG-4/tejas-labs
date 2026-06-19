@@ -4,54 +4,66 @@ export const studio = {
   name: "Tejas Labs",
   wordmark: "TEJAS LABS",
   tagline:
-    "Production-ready AI automation, agentic workflows, and full-stack AI applications.",
+    "AI chatbots, business automation, and custom software — built fast, deployed reliably, supported long-term.",
   blurb:
-    "We build AI that doesn’t just demo well — it runs in your business. RAG systems, custom GPT agents, and full-stack AI apps that pass audits, cut costs, and scale. Trusted by the Government of Chhattisgarh.",
+    "We're a full-service software agency specializing in AI chatbots, lead generation websites, business automation, and custom development. From landing pages to full-stack SaaS builds and mobile apps — we handle everything from first commit to production deployment. Trusted by the Government of Chhattisgarh.",
   email: "tejaslabs0028@gmail.com",
   upwork: "https://www.upwork.com/agencies/2066396595594354942/",
   location: "Raipur, India · GMT+5:30",
   founded: 2021,
-  cta: "Start a project",
+  cta: "Get a free quote",
   trust: "Trusted by the Government of Chhattisgarh",
 };
 
 export const stats = [
-  { value: "30+", label: "projects shipped" },
-  { value: "6 mo", label: "in production AI" },
-  { value: "3", label: "specialists, no handoffs" },
+  { value: "30+", label: "projects delivered" },
+  { value: "<7d", label: "to first working demo" },
+  { value: "4", label: "specialists, zero handoffs" },
   { value: "∞", label: "iterations until it ships" },
 ];
 
 export const services = [
   {
     n: "01",
-    title: "Custom GPT Agents & RPA",
-    body: "Task-oriented agents with multi-tool workflows, browser automation, and built-in cost control. They do the work, not just the demo.",
-    tags: ["LangGraph", "Playwright", "RPA"],
+    title: "AI Chatbots & Voice Agents",
+    body: "Custom chatbots for lead qualification, appointment booking, FAQ handling, and customer support — built with Vapi voice agents and GoHighLevel AI chat, deployed across websites, WhatsApp, and SMS.",
+    tags: ["Vapi", "GoHighLevel", "OpenAI", "WhatsApp"],
   },
   {
     n: "02",
-    title: "Vertical SaaS Integrations",
-    body: "Replace Zapier sprawl with engineered pipelines across Shopify, Tekmetric, HubSpot, GHL, and Google Workspace.",
-    tags: ["Shopify", "HubSpot", "n8n", "Make.com"],
+    title: "GoHighLevel Implementation",
+    body: "Complete GHL setup for your agency or business — website creation, workflow automation, pipeline configuration, calendar booking, Twilio integration, snapshot creation, and AI chatbot wiring.",
+    tags: ["GoHighLevel", "Twilio", "Workflows", "CRM"],
   },
   {
     n: "03",
-    title: "RAG Knowledge Systems",
-    body: "Secure vector search (Pinecone, PGVector) over your private docs, with PII masking and full audit logs.",
-    tags: ["Pinecone", "PGVector", "RAG"],
+    title: "Lead Generation Websites",
+    body: "Conversion-focused landing pages for law firms, dental clinics, realtors, HVAC, roofing, and local businesses — with contact forms, call tracking, chatbot integration, and CRM hookups.",
+    tags: ["Landing Pages", "SEO", "CRM", "Vercel"],
   },
   {
     n: "04",
-    title: "Full-Stack AI Applications",
-    body: "FastAPI / Django / Node.js backends with React frontends — Dockerized, tested, and cloud-deployed.",
-    tags: ["FastAPI", "MERN", "Next.js", "Docker"],
+    title: "Business & Workflow Automation",
+    body: "Automated lead routing, email and SMS sequences, CRM updates, data scraping, and report generation — built with Python, custom APIs, and GHL workflows to eliminate manual busywork.",
+    tags: ["Python", "APIs", "n8n", "GHL Workflows"],
   },
   {
     n: "05",
-    title: "Data Automation & Reporting",
-    body: "Scraping, cleansing, and live dashboards with eval monitoring on top of your real data.",
-    tags: ["Scrapy", "Dashboards", "Evals"],
+    title: "Full-Stack Web & SaaS Development",
+    body: "Dashboards, admin panels, SaaS MVPs, booking systems, and internal business tools — built with React, Node.js, and MongoDB, deployed on Vercel or your cloud of choice.",
+    tags: ["React", "Node.js", "MongoDB", "Next.js"],
+  },
+  {
+    n: "06",
+    title: "Mobile App Development",
+    body: "Cross-platform mobile apps with Flutter and Firebase — MVPs, booking apps, directory apps, and community platforms with authentication, push notifications, and real-time data sync.",
+    tags: ["Flutter", "Firebase", "Android", "iOS"],
+  },
+  {
+    n: "07",
+    title: "AI Consulting & Data Services",
+    body: "Prompt engineering, AI workflow design, agent architecture, dataset collection and annotation, knowledge base creation, and OpenAI integration — from prototype to production-ready AI systems.",
+    tags: ["Prompt Engineering", "Datasets", "OpenAI", "RAG"],
   },
 ];
 
@@ -61,7 +73,7 @@ export const projects = [
     year: "2025",
     discipline: "Sustainable marketplace",
     blurb:
-      "A website for a business that connects householders with makers who turn everyday waste into eco-friendly home decor — a marketplace to discover, hire, and collaborate with creators crafting the best out of waste to beautify homes.",
+      "A full-stack marketplace connecting householders with makers who transform everyday waste into eco-friendly home decor — complete with discovery, hiring, and collaboration workflows.",
     metrics: ["waste-to-decor", "maker marketplace", "eco-first UX"],
     links: [{ label: "Visit site", url: "https://ecoroom.vercel.app/" }],
   },
@@ -70,7 +82,7 @@ export const projects = [
     year: "2024",
     discipline: "Mobile learning app",
     blurb:
-      "An Android app teaching the fundamentals of AI — core concepts, a searchable glossary of the field's famous terminology, and a live feed of the latest AI news, all in one pocket-sized learning companion.",
+      "A native Android application for learning AI fundamentals — featuring interactive lessons, a searchable glossary of key terminology, and a live feed of the latest AI news.",
     metrics: ["Android-native", "live AI news feed", "interactive glossary"],
     links: [
       {
@@ -84,16 +96,16 @@ export const projects = [
     year: "2025",
     discipline: "Bilingual data platform",
     blurb:
-      "A bilingual English/Spanish insights platform built for Brody covering Utah deportation data — surfacing trends and stories with AI-powered search and summaries for advocates, journalists, and affected communities.",
+      "A bilingual English/Spanish data platform surfacing Utah deportation trends with AI-powered search, automated summaries, and interactive dashboards for advocates and journalists.",
     metrics: ["bilingual EN/ES", "AI search & summaries", "trend dashboards"],
     links: [{ label: "Visit site", url: "https://stopdeportationutah.com/" }],
   },
   {
     name: "YouTube Shorts Automation",
     year: "2025",
-    discipline: "Content automation",
+    discipline: "Content automation pipeline",
     blurb:
-      "An n8n pipeline that auto-generates and schedules YouTube Shorts for any niche — generating clips and posting on a cadence, with a Google Sheets database tracking every video and its analytics as the single source of truth.",
+      "An automated n8n pipeline that generates and schedules YouTube Shorts for any niche — with a Google Sheets backend tracking every video and its analytics as the single source of truth.",
     metrics: ["n8n pipeline", "Google Sheets DB", "any-niche scheduling"],
   },
   {
@@ -101,7 +113,7 @@ export const projects = [
     year: "2024",
     discipline: "Personal AI agent",
     blurb:
-      "A personal-assistant agent built on OpenClaw and Hermes that automates the day-to-day — handling repetitive tasks and guiding users to automate their own uninteresting chores with AI, turning busywork into reproducible workflows.",
+      "A personal-assistant agent built on OpenClaw and Hermes that automates daily repetitive tasks — turning manual busywork into reproducible, AI-driven workflows users can customize themselves.",
     metrics: ["OpenClaw + Hermes", "daily task automation", "DIY agent guidance"],
     links: [
       { label: "OpenClaw", url: "https://openclaw.ai/" },
@@ -113,31 +125,31 @@ export const projects = [
 export const process = [
   {
     step: "Scope",
-    title: "We start with the problem, not the model",
-    body: "A scoping call and a written spec with clear audit, cost, and latency targets — agreed before a single line of code.",
+    title: "We start with your business problem",
+    body: "A discovery call to understand exactly what you need — then a clear proposal with scope, timeline, deliverables, and pricing. No surprises, no hidden fees.",
     day: "Day 01",
-    output: "Spec · price · targets",
+    output: "Proposal · scope · price",
   },
   {
     step: "Build",
-    title: "Ship to a staging URL on day one",
-    body: "We build in the real environment: real API keys, real data, observability and tracing from the very first commit.",
-    day: "Day 02–05",
-    output: "Staging URL · logs",
+    title: "Working prototype within days",
+    body: "We move fast. You'll see a working version deployed to a staging URL early — with real integrations and real data, not static mockups or Figma files.",
+    day: "Day 02–07",
+    output: "Staging URL · demo",
   },
   {
-    step: "Harden",
-    title: "Production mindset by default",
-    body: "Acceptance tests, prompt versioning, PII masking, key vaulting, and cost dashboards — all in place before handoff.",
-    day: "Day 06–14",
-    output: "Audit pass · dashboards",
+    step: "Refine",
+    title: "Your feedback shapes the final product",
+    body: "We iterate based on your feedback — fine-tuning the design, dialing in automations, testing edge cases, and making sure everything works exactly as expected.",
+    day: "Day 07–14",
+    output: "Production build · QA",
   },
   {
-    step: "Run",
-    title: "Retainers for ongoing improvement",
-    body: "We stay on for prompt and tool refinement, eval monitoring, and rapid iteration as your business changes.",
-    day: "Day 15+",
-    output: "Live · retainer",
+    step: "Launch",
+    title: "Deployed, documented, and supported",
+    body: "We deploy to production, configure your domain, set up monitoring, and hand over everything with full documentation. Ongoing support is available as a monthly retainer.",
+    day: "Day 14+",
+    output: "Live · support",
   },
 ];
 
@@ -146,25 +158,25 @@ export const team = [
     name: "Tushar Naidu",
     role: "Founder",
     img: "/tushar.jpeg",
-    bio: "Leads the AI architecture — LangGraph workflows, RAG systems, and the backend that keeps them running in production.",
+    bio: "Leads AI architecture and backend systems — LangGraph workflows, RAG pipelines, chatbot integrations, and the infrastructure that keeps everything running in production.",
   },
   {
     name: "Ansh Pandey",
     role: "Founder",
     img: "/ansh.png",
-    bio: "Builds the full-stack apps and SaaS integrations around the models — React, Next.js, Node, and the glue between tools.",
+    bio: "Builds the full-stack applications, lead gen sites, GoHighLevel implementations, and SaaS integrations — React, Next.js, Node, Vercel deployments, and everything in between.",
   },
   {
     name: "Lag",
     role: "AI Developer",
     img: undefined,
-    bio: "Builds and ships the models — from prompt engineering to agentic workflows, evals, and the inference layer behind every product.",
+    bio: "Our AI specialist — prompt engineering, chatbot architecture, agentic workflows, dataset collection and annotation, evaluation pipelines, and the AI layer behind every product we ship.",
   },
   {
     name: "Nitin",
     role: "Backend Dev · Full-Stack",
     img: undefined,
-    bio: "Owns the backend, APIs, and the full-stack glue — data pipelines, Docker/K8s deployment, and the observability that keeps everything accountable.",
+    bio: "Owns the backend, APIs, and infrastructure — data pipelines, Docker/K8s deployments, database design, API integrations, and the observability layer that keeps everything accountable.",
   },
 ];
 
@@ -177,13 +189,13 @@ export const testimonials = [
   },
   {
     quote:
-      "Most agencies ship a demo. Tejas Labs shipped observability and cost dashboards on day one.",
+      "Most agencies deliver a prototype. Tejas Labs delivered a production system with monitoring and cost tracking on day one.",
     name: "Founder",
     title: "D2C Retail Brand",
   },
   {
     quote:
-      "They replaced our Zapier sprawl with one maintainable pipeline. Costs dropped, reliability went up.",
+      "They replaced our Zapier sprawl with one clean automated pipeline. Costs dropped, reliability went up.",
     name: "CTO",
     title: "B2B SaaS Startup",
   },
@@ -192,48 +204,101 @@ export const testimonials = [
 export const faqs = [
   {
     q: "How do you price?",
-    a: "Fixed-scope projects or a monthly retainer. We quote after a scoping call once we understand the work — no hourly surprises, no scope creep invoices.",
+    a: "We offer productized packages and custom quotes. AI chatbot setup starts at $300–800, lead generation websites at $500–1500, GoHighLevel complete setups at $1,000–3,000+, and custom SaaS MVPs at $2,000–5,000+. Monthly maintenance retainers are also available.",
   },
   {
     q: "How fast can you start?",
-    a: "Usually within a week. We run two engagements at a time so each gets the full team’s attention, not a slice of it.",
+    a: "Usually within a week. Chatbot setups and landing pages can ship in days. We limit active engagements so every project gets the full team's focus, not a fraction of it.",
+  },
+  {
+    q: "What industries do you work with?",
+    a: "We specialize in local businesses and agencies — law firms, dental clinics, realtors, HVAC, roofing, medical clinics, and e-commerce brands. If you need leads, automation, or a better digital presence, we can help.",
+  },
+  {
+    q: "Do you offer ongoing support?",
+    a: "Yes. Monthly maintenance packages cover content updates, bug fixes, hosting support, domain management, and performance monitoring. Most clients stay on a retainer after launch.",
+  },
+  {
+    q: "Which AI tools do you use?",
+    a: "GPT-4o, Claude, Gemini, Vapi for voice agents, and GoHighLevel for CRM automation — wired with intelligent fallback and caching so you control costs without being locked to one vendor.",
   },
   {
     q: "Is my data secure?",
-    a: "By default: API key vaulting, PII masking, data-residency controls, and full audit logs. We build to pass your security review, not dodge it.",
-  },
-  {
-    q: "Which models do you use?",
-    a: "GPT-5, Claude, Gemini, and Perplexity — wired behind smart fallback and caching so you control spend without locking into one vendor.",
+    a: "By default: API key vaulting, PII masking, data-residency controls, and full audit logs. We build to pass your security review, not sidestep it.",
   },
 ];
 
 export const techStack = [
   "Python",
   "FastAPI",
-  "Flask",
   "Django REST",
   "Node.js",
   "Next.js",
   "React",
-  "Tailwind",
   "Flutter",
+  "Firebase",
+  "GoHighLevel",
+  "Vapi",
   "LangGraph",
+  "OpenAI",
   "PostgreSQL",
   "MongoDB",
   "Pinecone",
-  "PGVector",
   "AWS",
   "GCP",
-  "Azure",
   "Docker",
-  "Kubernetes",
-  "GitHub Actions",
+  "Vercel",
+  "Twilio",
   "Playwright",
-  "Scrapy",
   "n8n",
   "Shopify",
   "HubSpot",
-  "GHL",
   "Zapier",
+];
+
+export const packages = [
+  {
+    tier: "A",
+    name: "AI Chatbot Setup",
+    price: "$300–800",
+    items: [
+      "Custom chat widget",
+      "Lead capture & qualification",
+      "FAQ training",
+      "Deployment & embedding",
+    ],
+  },
+  {
+    tier: "B",
+    name: "Lead Generation Website",
+    price: "$500–1,500",
+    items: [
+      "Responsive website build",
+      "Contact forms & CRM integration",
+      "Domain & hosting setup",
+      "SEO fundamentals",
+    ],
+  },
+  {
+    tier: "C",
+    name: "GoHighLevel Complete Setup",
+    price: "$1,000–3,000+",
+    items: [
+      "Website & funnel build",
+      "Pipelines & workflow automation",
+      "AI chatbot integration",
+      "Calendar, Twilio & full automation",
+    ],
+  },
+  {
+    tier: "D",
+    name: "Custom SaaS MVP",
+    price: "$2,000–5,000+",
+    items: [
+      "React + Node.js application",
+      "Database design & integration",
+      "Cloud hosting & deployment",
+      "Full documentation & handoff",
+    ],
+  },
 ];

@@ -3,8 +3,8 @@ import Link from "next/link";
 import { studio } from "@/lib/studio";
 
 export const metadata: Metadata = {
-  title: "Wrong edition · Tejas Labs",
-  description: "That page isn’t in this issue. Head back to the front page.",
+  title: "Page not found · Tejas Labs",
+  description: "The page you're looking for doesn't exist. Head back to the homepage.",
   robots: { index: false },
 };
 
@@ -34,7 +34,7 @@ export default function NotFound() {
         <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">
           <span className="h-2 w-2 rounded-full bg-[var(--pink)]" />
           <span className="h-2 w-2 rounded-full bg-[var(--blue)]" />
-          error 404 · wrong edition
+          error 404 · page not found
         </div>
 
         <h1
@@ -45,13 +45,13 @@ export default function NotFound() {
           <br />
           not
           <br />
-          <span className="text-[var(--pink)]">printed.</span>
+          <span className="text-[var(--pink)]">found.</span>
         </h1>
 
         <p className="mt-8 max-w-md text-base leading-relaxed text-[var(--ink-soft)]">
-          The page you’re after isn’t in this issue — it may have moved, been
-          retired, or never made it past the editor. Head back to the front
-          page, or jump to a section below.
+          The page you're looking for doesn't exist — it may have moved,
+          been removed, or the URL might be incorrect. Head back to the
+          homepage, or jump to a section below.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-4">
@@ -59,13 +59,13 @@ export default function NotFound() {
             href="/"
             className="bg-[var(--invert-bg)] px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--invert-text)] transition hover:bg-[var(--pink)] hover:text-[#111111]"
           >
-            Back to the front page ▸
+            Back to homepage ▸
           </Link>
           <a
             href={`mailto:${studio.email}`}
             className="border-2 border-[var(--border)] px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] transition hover:bg-[var(--invert-bg)] hover:text-[var(--invert-text)]"
           >
-            Tell us what you were after
+            Let us know what you need
           </a>
         </div>
       </div>

@@ -15,7 +15,6 @@ import {
 } from "@/lib/studio";
 import { useAutoReveal, useMouseParallax, useReducedMotion, useScrollProgress } from "@/lib/hooks";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { ContactForm } from "@/components/contact-form";
 
 const display = Archivo_Black({ weight: "400", subsets: ["latin"], variable: "--font-display", display: "swap" });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -130,17 +129,17 @@ export default function Home() {
             <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">
               <span className="h-2 w-2 rounded-full bg-[var(--pink)]" />
               <span className="h-2 w-2 rounded-full bg-[var(--blue)]" />
-              {studio.name} · AI automation studio
+              {studio.name} · software & AI agency
             </div>
             <h1
               style={{ fontFamily: "var(--font-display)" }}
               className="text-[clamp(2.4rem,7vw,5.5rem)] uppercase leading-[0.86] tracking-tight"
             >
-              We ship AI that
+              We build what
               <br />
-              survives
+              your business
               <br />
-              <Overprint>production.</Overprint>
+              <Overprint>runs on.</Overprint>
             </h1>
             <p className="mt-8 max-w-md text-base leading-relaxed text-[var(--ink-soft)]">
               {studio.blurb}
@@ -160,7 +159,7 @@ export default function Home() {
                 href="#work"
                 className="border-2 border-[var(--border)] px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] transition hover:bg-[var(--invert-bg)] hover:text-[var(--invert-text)]"
               >
-                See shipped work
+                View our work
               </a>
             </div>
           </div>
@@ -199,15 +198,15 @@ export default function Home() {
                   </div>
                   <div className="mt-6 text-center">
                     <div className="text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--ink-mute)]">
-                      specimen · no. 01
+                      precision · no. 01
                     </div>
                     <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-soft)]">
-                      proof / approved
+                      deployed / verified
                     </div>
                   </div>
                 </div>
                 <div style={{ fontFamily: "var(--font-display)" }} className="absolute bottom-5 left-5 right-5 text-2xl uppercase leading-none">
-                  RAG · Agents · Apps
+                  Chatbots · Automation · Apps
                 </div>
               </div>
             </div>
@@ -238,11 +237,11 @@ export default function Home() {
         <section id="work" className="scroll-mt-24 py-20">
           <div className="mb-10 flex items-end justify-between">
             <div>
-              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">shipped work</div>
-              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Selected prints</h2>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">our work</div>
+              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Case studies</h2>
             </div>
             <div className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:block">
-              sheets stack as you scroll
+              scroll to explore projects
             </div>
           </div>
 
@@ -320,10 +319,10 @@ export default function Home() {
         <section id="services" className="scroll-mt-24 border-t-2 border-[var(--border)] py-20">
           <div className="mb-10 flex items-end justify-between">
             <div>
-              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">what we deliver</div>
-              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Contents</h2>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">what we build</div>
+              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Capabilities</h2>
             </div>
-            <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">five disciplines</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">seven core services</div>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
             {services.map((s, i) => (
@@ -358,10 +357,10 @@ export default function Home() {
           <div className="mb-10 flex items-end justify-between">
             <div>
               <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">how we work</div>
-              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">A press run</h2>
+              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Our process</h2>
             </div>
             <div className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:block">
-              four passes · one shipped build
+              four phases · one shipped product
             </div>
           </div>
           <WorkflowCard />
@@ -370,8 +369,8 @@ export default function Home() {
         {/* team */}
         <section id="team" className="scroll-mt-24 border-t-2 border-[var(--border)] py-20">
           <div className="mb-10">
-            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">masthead</div>
-            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">The studio</h2>
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">our team</div>
+            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Meet the team</h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
             {team.map((t, i) => (
@@ -405,8 +404,8 @@ export default function Home() {
         {/* testimonials */}
         <section className="border-t-2 border-[var(--border)] py-20">
           <div className="mb-10">
-            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">blurbs</div>
-            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">From the clients</h2>
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">client feedback</div>
+            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">What clients say</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {testimonials.map((t, i) => (
@@ -431,8 +430,8 @@ export default function Home() {
         {/* FAQ */}
         <section className="border-t-2 border-[var(--border)] py-20">
           <div className="mb-10">
-            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">fine print</div>
-            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Questions</h2>
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">common questions</div>
+            <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">FAQ</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             {faqs.map((f, i) => (
@@ -451,39 +450,28 @@ export default function Home() {
         <section id="contact" className="scroll-mt-24 border-t-2 border-[var(--border)] py-20">
           <div className="relative overflow-hidden border-2 border-[var(--invert-border)] bg-[var(--invert-bg)] p-8 text-[var(--invert-text)] sm:p-12">
             <Halftone color="var(--invert-text)" size={9} opacity={0.06} />
-            <div className="relative grid gap-10 lg:grid-cols-12">
-              <div className="lg:col-span-5">
-                <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">{studio.cta}</div>
-                <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-3 text-5xl uppercase leading-none">
-                  Hand us the <span className="text-[var(--pink)]">brief.</span>
-                </h2>
-                <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--invert-text-soft)]">
-                  Tell us what you’re trying to automate. We’ll come back with a
-                  fixed scope, a price, and the audit, cost, and latency targets
-                  we’ll hit — usually within two working days.
-                </p>
-                <div className="mt-6 flex flex-col gap-3 text-[10px] font-bold uppercase tracking-widest">
-                  <a
-                    href={`mailto:${studio.email}`}
-                    className="text-[var(--invert-text-soft)] transition hover:text-[var(--pink)]"
-                  >
-                    {studio.email} <span aria-hidden>↗</span>
-                  </a>
-                  <a
-                    href={studio.upwork}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--invert-text-mute)] transition hover:text-[var(--invert-text)]"
-                  >
-                    Message us on Upwork <span aria-hidden>↗</span>
-                  </a>
-                </div>
-                <div className="mt-6 text-[10px] font-bold uppercase tracking-widest text-[var(--invert-text-mute)]">
-                  {studio.location} · {studio.wordmark}
-                </div>
+            <div className="relative flex flex-col items-center justify-center text-center py-10 max-w-xl mx-auto">
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">{studio.cta}</div>
+              <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-5xl uppercase leading-none">
+                Let's build <span className="text-[var(--pink)]">together.</span>
+              </h2>
+              <p className="mt-6 text-sm leading-relaxed text-[var(--invert-text-soft)]">
+                Whether you need an AI chatbot, a GoHighLevel setup, a lead generation website,
+                or a custom SaaS MVP — tell us about your project on Upwork and we'll collaborate
+                on a clear scope and price.
+              </p>
+              <div className="mt-8">
+                <a
+                  href={studio.upwork}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 border-2 border-[var(--invert-border)] bg-[var(--pink)] px-8 py-4 text-sm font-bold uppercase tracking-[0.2em] text-[#111111] transition hover:bg-[var(--invert-text)]"
+                >
+                  Hire us on Upwork <span aria-hidden>▸</span>
+                </a>
               </div>
-              <div className="lg:col-span-7">
-                <ContactForm />
+              <div className="mt-8 text-[10px] font-bold uppercase tracking-widest text-[var(--invert-text-mute)]">
+                {studio.location} · {studio.wordmark}
               </div>
             </div>
           </div>
@@ -535,9 +523,9 @@ function WorkflowCard() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--pink)] opacity-60" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--pink)]" />
             </span>
-            <span>live · workflow</span>
+            <span>live · process</span>
             <span className="text-[var(--ink-softest)]">·</span>
-            <span className="text-[var(--ink-soft)]">pass {String(step + 1).padStart(2, "0")} of {String(process.length).padStart(2, "0")}</span>
+            <span className="text-[var(--ink-soft)]">phase {String(step + 1).padStart(2, "0")} of {String(process.length).padStart(2, "0")}</span>
           </div>
           <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">
             <span className="hidden sm:inline">{paused ? "paused · hover" : "auto · loop"}</span>
@@ -599,7 +587,7 @@ function WorkflowCard() {
         >
           <div className="sm:col-span-3">
             <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)]">
-              pass {String(step + 1).padStart(2, "0")}
+              phase {String(step + 1).padStart(2, "0")}
             </div>
             <h3
               style={{ fontFamily: "var(--font-display)" }}
@@ -627,7 +615,7 @@ function WorkflowCard() {
               {current.output}
             </div>
             <div className="mt-5 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)]">
-              pass color
+              phase color
             </div>
             <div className="mt-1 flex items-center gap-2">
               <span
@@ -648,8 +636,8 @@ function WorkflowCard() {
           <div className="flex-1 bg-[var(--ink)]" />
         </div>
         <div className="mt-2 flex items-center justify-between text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--ink-faint)]">
-          <span>tejas labs · proof card</span>
-          <span>j-001 · auto-tick</span>
+          <span>tejas labs · process tracker</span>
+          <span>v1.0 · auto-cycle</span>
         </div>
       </div>
     </div>
@@ -691,8 +679,7 @@ function Footer() {
         </div>
         <div className="text-sm">
           <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">Get in touch</div>
-          <a href={`mailto:${studio.email}`} className="mt-2 block font-bold hover:text-[var(--pink)]">{studio.email}</a>
-          <a href={studio.upwork} target="_blank" rel="noopener noreferrer" className="mt-1 block text-[var(--ink-soft)] hover:text-[var(--blue)]">Upwork →</a>
+          <a href={studio.upwork} target="_blank" rel="noopener noreferrer" className="mt-2 block font-bold hover:text-[var(--pink)]">Hire us on Upwork →</a>
           <div className="mt-2 text-[var(--ink-mute)]">{studio.location}</div>
         </div>
         <div className="text-sm">

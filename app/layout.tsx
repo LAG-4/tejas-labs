@@ -66,7 +66,6 @@ const jsonLd = {
       logo: `${SITE_URL}/favicon.svg`,
       description:
         "AI automation studio building production-ready agentic workflows, RAG systems, and full-stack AI apps. Based in Raipur, India.",
-      email: studio.email,
       foundingDate: "2021",
       areaServed: "Worldwide",
       knowsAbout: [
