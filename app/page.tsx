@@ -14,14 +14,10 @@ import {
   testimonials,
 } from "@/lib/studio";
 import { useAutoReveal, useMouseParallax, useReducedMotion, useScrollProgress } from "@/lib/hooks";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const display = Archivo_Black({ weight: "400", subsets: ["latin"], variable: "--font-display", display: "swap" });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
-
-const PAPER = "#f6f1e7";
-const PINK = "#ff2d6f";
-const BLUE = "#1b3cff";
-const INK = "#111111";
 
 function Halftone({ color, size = 10, opacity = 0.5 }: { color: string; size?: number; opacity?: number }) {
   return (
@@ -40,18 +36,18 @@ function Halftone({ color, size = 10, opacity = 0.5 }: { color: string; size?: n
 function Overprint({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <span className={`relative inline-block ${className}`}>
-      <span className="relative z-10 text-[#111]">{children}</span>
+      <span className="relative z-10 text-[var(--ink)]">{children}</span>
       <span
         aria-hidden
-        className="absolute inset-0 z-20 text-[#ff2d6f]"
-        style={{ transform: "translate(-6px, 3px)", mixBlendMode: "multiply" }}
+        className="overprint-layer overprint-pink absolute inset-0 z-20 text-[var(--pink)]"
+        style={{ transform: "translate(-6px, 3px)" }}
       >
         {children}
       </span>
       <span
         aria-hidden
-        className="absolute inset-0 z-30 text-[#1b3cff]"
-        style={{ transform: "translate(6px, -3px)", mixBlendMode: "multiply" }}
+        className="overprint-layer overprint-blue absolute inset-0 z-30 text-[var(--blue)]"
+        style={{ transform: "translate(6px, -3px)" }}
       >
         {children}
       </span>
@@ -97,13 +93,13 @@ export default function Home() {
 
   return (
     <div
-      className={`${display.variable} ${body.variable} min-h-screen text-[#111]`}
-      style={{ background: PAPER, fontFamily: "var(--font-body)" }}
+      className={`${display.variable} ${body.variable} min-h-screen text-[var(--ink)]`}
+      style={{ background: "var(--bg)", fontFamily: "var(--font-body)" }}
     >
       {/* press progress as a registration bar */}
       <div className="fixed left-0 top-0 z-50 flex h-2 w-full">
-        <div className="h-full bg-[#ff2d6f]" style={{ width: `${progress * 100}%` }} />
-        <div className="h-full flex-1 bg-[#1b3cff]/15" />
+        <div className="h-full bg-[var(--pink)]" style={{ width: `${progress * 100}%` }} />
+        <div className="h-full flex-1 bg-[var(--blue)]/15" />
       </div>
 
       {/* cursor spotlight — follows the mouse, tinted disk that fades on idle */}
@@ -112,13 +108,13 @@ export default function Home() {
       <Nav />
 
       {/* tech stack marquee */}
-      <div className="marquee-wrap overflow-hidden border-y border-black/15 bg-[#111] py-3 text-[#f6f1e7]">
+      <div className="marquee-wrap overflow-hidden border-y border-[var(--ink-trace)] bg-[var(--invert-bg)] py-3 text-[var(--invert-text)]">
         <div className="marquee-track flex w-max gap-8 whitespace-nowrap" style={{ ["--marquee-duration" as string]: "44s" }}>
           {Array.from({ length: 2 }).map((_, k) => (
             <span key={k} className="flex gap-8 text-xs font-bold uppercase tracking-[0.25em]">
               {techStack.map((t, i) => (
                 <span key={i} className="flex items-center gap-8">
-                  {t} <span className="text-[#ff2d6f]">✦</span>
+                  {t} <span className="text-[var(--pink)]">✦</span>
                 </span>
               ))}
             </span>
@@ -130,9 +126,9 @@ export default function Home() {
         {/* hero poster */}
         <section className="relative grid gap-10 py-14 lg:grid-cols-12 lg:gap-8">
           <div className="relative lg:col-span-8">
-            <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">
-              <span className="h-2 w-2 rounded-full bg-[#ff2d6f]" />
-              <span className="h-2 w-2 rounded-full bg-[#1b3cff]" />
+            <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">
+              <span className="h-2 w-2 rounded-full bg-[var(--pink)]" />
+              <span className="h-2 w-2 rounded-full bg-[var(--blue)]" />
               {studio.name} · AI automation studio
             </div>
             <h1
@@ -145,23 +141,23 @@ export default function Home() {
               <br />
               <Overprint>production.</Overprint>
             </h1>
-            <p className="mt-8 max-w-md text-base leading-relaxed text-black/70">
+            <p className="mt-8 max-w-md text-base leading-relaxed text-[var(--ink-soft)]">
               {studio.blurb}
             </p>
-            <div className="mt-8 inline-flex items-center gap-3 border-2 border-black bg-[#f6f1e7] px-4 py-2 text-xs font-bold uppercase tracking-[0.2em]">
-              <span className="text-[#ff2d6f]">★</span>
+            <div className="mt-8 inline-flex items-center gap-3 border-2 border-[var(--border)] bg-[var(--paper)] px-4 py-2 text-xs font-bold uppercase tracking-[0.2em]">
+              <span className="text-[var(--pink)]">★</span>
               {studio.trust}
             </div>
             <div className="mt-8 flex flex-wrap gap-4">
               <a
                 href="#contact"
-                className="bg-[#111] px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] text-[#f6f1e7] transition hover:bg-[#ff2d6f]"
+                className="bg-[var(--invert-bg)] px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--invert-text)] transition hover:bg-[var(--pink)] hover:text-[#111111]"
               >
                 {studio.cta} ▸
               </a>
               <a
                 href="#work"
-                className="border-2 border-black px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] transition hover:bg-black hover:text-[#f6f1e7]"
+                className="border-2 border-[var(--border)] px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] transition hover:bg-[var(--invert-bg)] hover:text-[var(--invert-text)]"
               >
                 See shipped work
               </a>
@@ -170,18 +166,18 @@ export default function Home() {
 
           {/* poster block */}
           <div className="relative lg:col-span-4">
-            <div className="relative aspect-[3/4] overflow-hidden border-2 border-black bg-[#f6f1e7]">
-              <Halftone color={INK} size={9} opacity={0.12} />
+            <div className="relative aspect-[3/4] overflow-hidden border-2 border-[var(--border)] bg-[var(--paper)] text-[var(--ink)]">
+              <Halftone color="var(--ink)" size={9} opacity={0.12} />
               <div className="absolute inset-0 p-5">
                 <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest">
                   <span>{studio.wordmark}</span>
                   <span>EST. {studio.founded}</span>
                 </div>
-                <div className="mt-5 flex h-2 w-full overflow-hidden border border-black/40">
-                  <div className="flex-1 bg-[#ff2d6f]" />
-                  <div className="flex-1 bg-[#1b3cff]" />
-                  <div className="flex-1 bg-[#111]" />
-                  <div className="flex-1 bg-[#f6f1e7]" />
+                <div className="mt-5 flex h-2 w-full overflow-hidden border border-[var(--ink-mute)]">
+                  <div className="flex-1 bg-[var(--pink)]" />
+                  <div className="flex-1 bg-[var(--blue)]" />
+                  <div className="flex-1 bg-[var(--ink)]" />
+                  <div className="flex-1 bg-[var(--paper)]" />
                 </div>
                 <div className="relative mt-8 flex h-[55%] flex-col items-center justify-center">
                   <div
@@ -190,21 +186,21 @@ export default function Home() {
                       transform: `translate(${reduced ? 0 : mouse.x * 14}px, ${reduced ? 0 : mouse.y * 14}px)`,
                     }}
                   >
-                    <div className="absolute inset-0 rounded-full border-2 border-black" />
-                    <div className="absolute inset-3 rounded-full border border-black/60" />
-                    <div className="absolute inset-6 rounded-full border border-[#ff2d6f]" />
-                    <div className="absolute inset-9 rounded-full border border-[#1b3cff]" />
-                    <div className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-black" />
-                    <div className="absolute bottom-0 left-1/2 h-4 w-px -translate-x-1/2 bg-black" />
-                    <div className="absolute left-0 top-1/2 h-px w-4 -translate-y-1/2 bg-black" />
-                    <div className="absolute right-0 top-1/2 h-px w-4 -translate-y-1/2 bg-black" />
-                    <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#111]" />
+                    <div className="absolute inset-0 rounded-full border-2 border-[var(--border)]" />
+                    <div className="absolute inset-3 rounded-full border border-[var(--ink-soft)]" />
+                    <div className="absolute inset-6 rounded-full border border-[var(--pink)]" />
+                    <div className="absolute inset-9 rounded-full border border-[var(--blue)]" />
+                    <div className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-[var(--ink)]" />
+                    <div className="absolute bottom-0 left-1/2 h-4 w-px -translate-x-1/2 bg-[var(--ink)]" />
+                    <div className="absolute left-0 top-1/2 h-px w-4 -translate-y-1/2 bg-[var(--ink)]" />
+                    <div className="absolute right-0 top-1/2 h-px w-4 -translate-y-1/2 bg-[var(--ink)]" />
+                    <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--ink)]" />
                   </div>
                   <div className="mt-6 text-center">
-                    <div className="text-[9px] font-bold uppercase tracking-[0.3em] text-black/50">
+                    <div className="text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--ink-mute)]">
                       specimen · no. 01
                     </div>
-                    <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-black/70">
+                    <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-soft)]">
                       proof / approved
                     </div>
                   </div>
@@ -218,19 +214,19 @@ export default function Home() {
         </section>
 
         {/* stats */}
-        <section className="grid grid-cols-2 gap-px border-2 border-black bg-black lg:grid-cols-4">
+        <section className="grid grid-cols-2 gap-px border-2 border-[var(--border)] bg-[var(--border)] lg:grid-cols-4">
           {stats.map((s) => (
             <div
               key={s.label}
-              className="stat-cell group bg-[#f6f1e7] p-6 transition-colors duration-300 hover:bg-[#111]"
+              className="stat-cell group bg-[var(--paper)] p-6 transition-colors duration-300 hover:bg-[var(--invert-bg)]"
             >
               <div
                 style={{ fontFamily: "var(--font-display)" }}
-                className="text-5xl text-[#1b3cff] transition-colors duration-300 group-hover:text-[#ff2d6f]"
+                className="text-5xl text-[var(--blue)] transition-colors duration-300 group-hover:text-[var(--pink)]"
               >
                 {s.value}
               </div>
-              <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-black/60 transition-colors duration-300 group-hover:text-[#f6f1e7]/70">
+              <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-soft)] transition-colors duration-300 group-hover:text-[var(--invert-text-soft)]">
                 {s.label}
               </div>
             </div>
@@ -241,10 +237,10 @@ export default function Home() {
         <section id="work" className="scroll-mt-24 py-20">
           <div className="mb-10 flex items-end justify-between">
             <div>
-              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">shipped work</div>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">shipped work</div>
               <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Selected prints</h2>
             </div>
-            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-black/40 sm:block">
+            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:block">
               sheets stack as you scroll
             </div>
           </div>
@@ -262,35 +258,35 @@ export default function Home() {
                     ["--rot" as string]: `${rot}deg`,
                     ["--reveal-delay" as string]: `${i * 60}ms`,
                   }}
-                  className="press-sheet sticky overflow-hidden border-2 border-black bg-[#f6f1e7] shadow-[8px_8px_0_0_#111]"
+                  className="press-sheet sticky overflow-hidden border-2 border-[var(--border)] bg-[var(--paper)] text-[var(--ink)]"
                 >
-                  <Halftone color={isPink ? PINK : BLUE} size={12} opacity={0.1} />
+                  <Halftone color={isPink ? "var(--pink)" : "var(--blue)"} size={12} opacity={0.1} />
                   <div className="relative grid gap-6 p-6 sm:p-10 md:grid-cols-12">
                     <div className="md:col-span-2">
-                      <div style={{ fontFamily: "var(--font-display)" }} className="text-6xl leading-none text-black/15">
+                      <div style={{ fontFamily: "var(--font-display)" }} className="text-6xl leading-none text-[var(--ink-ghost)]">
                         {String(i + 1).padStart(2, "0")}
                       </div>
-                      <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
+                      <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)]">
                         {p.year}
                       </div>
                     </div>
                     <div className="md:col-span-6">
-                      <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: isPink ? PINK : BLUE }}>
+                      <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: isPink ? "var(--pink)" : "var(--blue)" }}>
                         {p.discipline}
                       </div>
                       <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-1 text-4xl uppercase leading-none sm:text-5xl">
                         {p.name}
                       </h3>
-                      <p className="mt-3 max-w-md text-sm leading-relaxed text-black/70">
+                      <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--ink-soft)]">
                         {p.blurb}
                       </p>
                     </div>
                     <div className="md:col-span-4">
-                      <div className="text-[10px] font-bold uppercase tracking-widest text-black/40">results</div>
+                      <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">results</div>
                       <ul className="mt-3 space-y-2">
                         {p.metrics.map((m) => (
                           <li key={m} className="flex items-center gap-2 text-sm font-bold">
-                            <span className="h-2.5 w-2.5" style={{ background: isPink ? PINK : BLUE }} />
+                            <span className="h-2.5 w-2.5" style={{ background: isPink ? "var(--pink)" : "var(--blue)" }} />
                             {m}
                           </li>
                         ))}
@@ -303,8 +299,8 @@ export default function Home() {
                               href={l.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{ ["--link-hover" as string]: isPink ? PINK : BLUE }}
-                              className="inline-flex items-center gap-1.5 border-2 border-black bg-[#f6f1e7] px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 hover:bg-[var(--link-hover)] hover:text-[#f6f1e7]"
+                              style={{ ["--link-hover" as string]: isPink ? "var(--pink)" : "var(--blue)" }}
+                              className="inline-flex items-center gap-1.5 border-2 border-[var(--border)] bg-[var(--paper)] px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 hover:bg-[var(--link-hover)] hover:text-[var(--paper-text)]"
                             >
                               {l.label} <span aria-hidden>↗</span>
                             </a>
@@ -320,13 +316,13 @@ export default function Home() {
         </section>
 
         {/* capabilities */}
-        <section id="services" className="scroll-mt-24 border-t-2 border-black py-20">
+        <section id="services" className="scroll-mt-24 border-t-2 border-[var(--border)] py-20">
           <div className="mb-10 flex items-end justify-between">
             <div>
-              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">what we deliver</div>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">what we deliver</div>
               <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Contents</h2>
             </div>
-            <div className="text-[10px] font-bold uppercase tracking-widest text-black/40">five disciplines</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">five disciplines</div>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
             {services.map((s, i) => (
@@ -334,19 +330,19 @@ export default function Home() {
                 key={s.n}
                 data-reveal
                 style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}
-                className={`group relative overflow-hidden border-2 border-black p-6 transition-colors duration-300 hover:border-[#ff2d6f] hover:bg-[#ff2d6f]/[0.06] ${i === services.length - 1 ? "md:col-span-2" : ""}`}
+                className={`group relative overflow-hidden border-2 border-[var(--border)] p-6 transition-colors duration-300 hover:border-[var(--pink)] hover:bg-[var(--pink)]/[0.06] ${i === services.length - 1 ? "md:col-span-2" : ""}`}
               >
-                <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#1b3cff] transition-colors duration-300 group-hover:text-[#ff2d6f]">
+                <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[var(--blue)] transition-colors duration-300 group-hover:text-[var(--pink)]">
                   <span>{s.n}</span>
-                  <span className="h-px flex-1 bg-black/20 transition-colors duration-300 group-hover:bg-[#ff2d6f]/40" />
+                  <span className="h-px flex-1 bg-[var(--ink-trace)] transition-colors duration-300 group-hover:bg-[var(--pink)]/40" />
                 </div>
-                <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-2xl uppercase transition-colors duration-300 group-hover:text-[#1b3cff]">
+                <h3 style={{ fontFamily: "var(--font-display)" }} className="mt-4 text-2xl uppercase transition-colors duration-300 group-hover:text-[var(--blue)]">
                   {s.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-black/70">{s.body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--ink-soft)]">{s.body}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {s.tags.map((t) => (
-                    <span key={t} className="border border-black/30 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 group-hover:border-black/60">
+                    <span key={t} className="border border-[var(--border-soft)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 group-hover:border-[var(--pink)]/60">
                       {t}
                     </span>
                   ))}
@@ -357,13 +353,13 @@ export default function Home() {
         </section>
 
         {/* process — animated live press run */}
-        <section id="process" className="scroll-mt-24 border-t-2 border-black py-20">
+        <section id="process" className="scroll-mt-24 border-t-2 border-[var(--border)] py-20">
           <div className="mb-10 flex items-end justify-between">
             <div>
-              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">how we work</div>
+              <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">how we work</div>
               <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">A press run</h2>
             </div>
-            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-black/40 sm:block">
+            <div className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:block">
               four passes · one shipped build
             </div>
           </div>
@@ -371,9 +367,9 @@ export default function Home() {
         </section>
 
         {/* team */}
-        <section id="team" className="scroll-mt-24 border-t-2 border-black py-20">
+        <section id="team" className="scroll-mt-24 border-t-2 border-[var(--border)] py-20">
           <div className="mb-10">
-            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">masthead</div>
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">masthead</div>
             <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">The studio</h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
@@ -382,10 +378,10 @@ export default function Home() {
                 key={t.name}
                 data-reveal
                 style={{ ["--reveal-delay" as string]: `${i * 70}ms` }}
-                className="team-card group relative flex flex-col overflow-hidden border-2 border-black transition-colors duration-300 hover:border-[#ff2d6f]"
+                className="team-card group relative flex flex-col overflow-hidden border-2 border-[var(--border)] transition-colors duration-300 hover:border-[var(--pink)]"
               >
                 {t.img && (
-                  <div className="aspect-[4/5] w-full overflow-hidden bg-[#eee5d3]">
+                  <div className="aspect-[4/5] w-full overflow-hidden bg-[var(--paper-faint)]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={t.img}
@@ -397,8 +393,8 @@ export default function Home() {
                 )}
                 <div className="p-5">
                   <h3 style={{ fontFamily: "var(--font-display)" }} className="text-3xl uppercase">{t.name}</h3>
-                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[#ff2d6f]">{t.role}</div>
-                  <p className="mt-3 text-sm leading-relaxed text-black/70">{t.bio}</p>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[var(--pink)]">{t.role}</div>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--ink-soft)]">{t.bio}</p>
                 </div>
               </div>
             ))}
@@ -406,9 +402,9 @@ export default function Home() {
         </section>
 
         {/* testimonials */}
-        <section className="border-t-2 border-black py-20">
+        <section className="border-t-2 border-[var(--border)] py-20">
           <div className="mb-10">
-            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#1b3cff]">blurbs</div>
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">blurbs</div>
             <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">From the clients</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
@@ -417,13 +413,13 @@ export default function Home() {
                 key={t.name}
                 data-reveal
                 style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
-                className="group border-2 border-black bg-[#f6f1e7] p-6 transition-colors duration-300 hover:border-[#ff2d6f]"
+                className="group border-2 border-[var(--border)] bg-[var(--paper)] p-6 transition-colors duration-300 hover:border-[var(--pink)]"
               >
-                <div className="text-4xl leading-none transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1" style={{ color: i % 2 ? BLUE : PINK }}>“</div>
+                <div className="text-4xl leading-none transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1" style={{ color: i % 2 ? "var(--blue)" : "var(--pink)" }}>“</div>
                 <blockquote style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-lg uppercase leading-tight">
                   {t.quote}
                 </blockquote>
-                <figcaption className="mt-5 text-[10px] font-bold uppercase tracking-widest text-black/50">
+                <figcaption className="mt-5 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)]">
                   {t.name} · {t.title}
                 </figcaption>
               </figure>
@@ -432,48 +428,48 @@ export default function Home() {
         </section>
 
         {/* FAQ */}
-        <section className="border-t-2 border-black py-20">
+        <section className="border-t-2 border-[var(--border)] py-20">
           <div className="mb-10">
-            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">fine print</div>
+            <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">fine print</div>
             <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Questions</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             {faqs.map((f, i) => (
-              <details key={f.q} data-reveal style={{ ["--reveal-delay" as string]: `${i * 60}ms` }} className="group border-2 border-black bg-[#f6f1e7] p-5">
+              <details key={f.q} data-reveal style={{ ["--reveal-delay" as string]: `${i * 60}ms` }} className="group border-2 border-[var(--border)] bg-[var(--paper)] p-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
                   <span style={{ fontFamily: "var(--font-display)" }} className="text-lg uppercase">{f.q}</span>
-                  <span className="text-2xl text-[#1b3cff] transition-transform group-open:rotate-45">+</span>
+                  <span className="text-2xl text-[var(--blue)] transition-transform group-open:rotate-45">+</span>
                 </summary>
-                <p className="mt-3 text-sm leading-relaxed text-black/70">{f.a}</p>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--ink-soft)]">{f.a}</p>
               </details>
             ))}
           </div>
         </section>
 
         {/* contact */}
-        <section id="contact" className="scroll-mt-24 border-t-2 border-black py-20">
-          <div className="relative overflow-hidden border-2 border-black bg-[#111] p-8 text-[#f6f1e7] sm:p-12">
-            <Halftone color={PAPER} size={9} opacity={0.06} />
+        <section id="contact" className="scroll-mt-24 border-t-2 border-[var(--border)] py-20">
+          <div className="relative overflow-hidden border-2 border-[var(--invert-border)] bg-[var(--invert-bg)] p-8 text-[var(--invert-text)] sm:p-12">
+            <Halftone color="var(--invert-text)" size={9} opacity={0.06} />
             <div className="relative grid gap-8 lg:grid-cols-2">
               <div>
-                <div className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff2d6f]">{studio.cta}</div>
+                <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--pink)]">{studio.cta}</div>
                 <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-3 text-5xl uppercase leading-none">
-                  Hand us the <span className="text-[#ff2d6f]">brief.</span>
+                  Hand us the <span className="text-[var(--pink)]">brief.</span>
                 </h2>
-                <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
+                <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--invert-text-soft)]">
                   Tell us what you’re trying to automate. We’ll come back with a
                   fixed scope, a price, and the audit, cost, and latency targets
                   we’ll hit — usually within two working days.
                 </p>
-                <div className="mt-6 text-[10px] font-bold uppercase tracking-widest text-white/50">
+                <div className="mt-6 text-[10px] font-bold uppercase tracking-widest text-[var(--invert-text-mute)]">
                   {studio.location} · {studio.wordmark}
                 </div>
               </div>
               <div className="flex flex-col justify-center gap-4">
-                <a href={`mailto:${studio.email}`} className="group flex items-center justify-between border-2 border-white px-5 py-4 text-sm font-bold uppercase tracking-widest transition hover:bg-[#ff2d6f] hover:text-[#111]">
+                <a href={`mailto:${studio.email}`} className="group flex items-center justify-between border-2 border-[var(--invert-border)] px-5 py-4 text-sm font-bold uppercase tracking-widest transition hover:bg-[var(--pink)] hover:text-[#111111] hover:border-[var(--pink)]">
                   {studio.email} <span>▸</span>
                 </a>
-                <a href={studio.upwork} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between border-2 border-white/30 px-5 py-4 text-sm font-bold uppercase tracking-widest text-white/70 transition hover:border-white hover:text-white">
+                <a href={studio.upwork} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between border-2 border-[var(--invert-border-soft)] px-5 py-4 text-sm font-bold uppercase tracking-widest text-[var(--invert-text-soft)] transition hover:border-[var(--invert-border)] hover:text-[var(--invert-text)]">
                   Message us on Upwork <span>↗</span>
                 </a>
               </div>
@@ -492,7 +488,6 @@ export default function Home() {
  *  node scales/colors, and the detail block fades in on each change.
  *  Respects prefers-reduced-motion. */
 const STEP_MS = 2600;
-const NODE_COLORS = [INK, PINK, BLUE, INK];
 
 function WorkflowCard() {
   const [step, setStep] = useState(0);
@@ -510,36 +505,37 @@ function WorkflowCard() {
   }, [paused]);
 
   const current = process[step];
+  const NODE_COLORS = ["var(--ink)", "var(--pink)", "var(--blue)", "var(--ink)"];
 
   return (
     <div
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       style={{ ["--workflow-step-ms" as string]: `${STEP_MS}ms` }}
-      className="relative overflow-hidden border-2 border-black bg-[#f6f1e7] shadow-[8px_8px_0_0_#111]"
+      className="relative overflow-hidden border-2 border-[var(--border)] bg-[var(--paper)] text-[var(--ink)]"
     >
-      <Halftone color={INK} size={9} opacity={0.1} />
+      <Halftone color="var(--ink)" size={9} opacity={0.1} />
       <div className="relative p-6 sm:p-10">
         {/* header bar */}
-        <div className="mb-8 flex items-center justify-between border-b border-black/15 pb-4">
-          <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black/70">
+        <div className="mb-8 flex items-center justify-between border-b border-[var(--ink-trace)] pb-4">
+          <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-soft)]">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff2d6f] opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#ff2d6f]" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--pink)] opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--pink)]" />
             </span>
             <span>live · workflow</span>
-            <span className="text-black/30">·</span>
-            <span className="text-black/60">pass {String(step + 1).padStart(2, "0")} of {String(process.length).padStart(2, "0")}</span>
+            <span className="text-[var(--ink-softest)]">·</span>
+            <span className="text-[var(--ink-soft)]">pass {String(step + 1).padStart(2, "0")} of {String(process.length).padStart(2, "0")}</span>
           </div>
-          <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black/40">
+          <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">
             <span className="hidden sm:inline">{paused ? "paused · hover" : "auto · loop"}</span>
-            <span className="font-mono text-black/60">{(step + 1).toString().padStart(2, "0")}/{process.length.toString().padStart(2, "0")}</span>
+            <span className="font-mono text-[var(--ink-soft)]">{(step + 1).toString().padStart(2, "0")}/{process.length.toString().padStart(2, "0")}</span>
           </div>
         </div>
 
         {/* step nodes */}
         <div className="relative">
-          <div className="pointer-events-none absolute left-3 right-3 top-3 h-px bg-black/15" />
+          <div className="pointer-events-none absolute left-3 right-3 top-3 h-px bg-[var(--ink-trace)]" />
           <div className="relative grid grid-cols-4 gap-2">
             {process.map((p, i) => {
               const isActive = i === step;
@@ -554,20 +550,21 @@ function WorkflowCard() {
                   <span
                     className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                       isActive
-                        ? "scale-125 border-black shadow-[0_0_0_4px_rgba(255,45,111,0.15)]"
+                        ? "scale-125 border-[var(--border)]"
                         : isPast
-                          ? "border-black"
-                          : "border-black/30 group-hover:border-black/60"
+                          ? "border-[var(--border)]"
+                          : "border-[var(--ink-softest)] group-hover:border-[var(--ink-soft)]"
                     }`}
                     style={{
-                      background: isActive ? PINK : isPast ? BLUE : PAPER,
+                      background: isActive ? "var(--pink)" : isPast ? "var(--blue)" : "var(--paper)",
+                      boxShadow: isActive ? "0 0 0 4px var(--pink-glow)" : undefined,
                     }}
                   >
-                    {isActive && <span className="h-1.5 w-1.5 rounded-full bg-[#f6f1e7]" />}
+                    {isActive && <span className="h-1.5 w-1.5 rounded-full bg-[var(--paper-text)]" />}
                   </span>
                   <span
                     className={`mt-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-500 ${
-                      isActive ? "text-black" : isPast ? "text-black/70" : "text-black/30 group-hover:text-black/60"
+                      isActive ? "text-[var(--ink)]" : isPast ? "text-[var(--ink-soft)]" : "text-[var(--ink-softest)] group-hover:text-[var(--ink-soft)]"
                     }`}
                   >
                     {p.step}
@@ -579,8 +576,8 @@ function WorkflowCard() {
         </div>
 
         {/* progress bar */}
-        <div className="mt-6 h-1 w-full overflow-hidden bg-black/10">
-          <div key={step} className="workflow-bar h-full bg-[#ff2d6f]" />
+        <div className="mt-6 h-1 w-full overflow-hidden bg-[var(--ink-ghost)]">
+          <div key={step} className="workflow-bar h-full bg-[var(--pink)]" />
         </div>
 
         {/* step detail — keyed so each step re-mounts and fades in */}
@@ -589,7 +586,7 @@ function WorkflowCard() {
           className="workflow-fade mt-10 grid gap-6 sm:grid-cols-12"
         >
           <div className="sm:col-span-3">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)]">
               pass {String(step + 1).padStart(2, "0")}
             </div>
             <h3
@@ -598,26 +595,26 @@ function WorkflowCard() {
             >
               {current.step}
             </h3>
-            <div className="mt-3 inline-block bg-[#1b3cff] px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-[#f6f1e7]">
+            <div className="mt-3 inline-block bg-[var(--blue)] px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--paper-text)]">
               {current.day}
             </div>
           </div>
           <div className="sm:col-span-6">
-            <p className="text-base font-bold leading-snug text-black sm:text-lg">
+            <p className="text-base font-bold leading-snug text-[var(--ink)] sm:text-lg">
               {current.title}
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-black/70">
+            <p className="mt-3 text-sm leading-relaxed text-[var(--ink-soft)]">
               {current.body}
             </p>
           </div>
           <div className="sm:col-span-3">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)]">
               output
             </div>
-            <div className="mt-1 text-sm font-bold uppercase tracking-widest text-[#ff2d6f]">
+            <div className="mt-1 text-sm font-bold uppercase tracking-widest text-[var(--pink)]">
               {current.output}
             </div>
-            <div className="mt-5 text-[10px] font-bold uppercase tracking-widest text-black/50">
+            <div className="mt-5 text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)]">
               pass color
             </div>
             <div className="mt-1 flex items-center gap-2">
@@ -633,12 +630,12 @@ function WorkflowCard() {
         </div>
 
         {/* color proof strip */}
-        <div className="mt-8 flex h-1.5 w-full overflow-hidden border border-black/30">
-          <div className="flex-1 bg-[#ff2d6f]" />
-          <div className="flex-1 bg-[#1b3cff]" />
-          <div className="flex-1 bg-[#111]" />
+        <div className="mt-8 flex h-1.5 w-full overflow-hidden border border-[var(--ink-softest)]">
+          <div className="flex-1 bg-[var(--pink)]" />
+          <div className="flex-1 bg-[var(--blue)]" />
+          <div className="flex-1 bg-[var(--ink)]" />
         </div>
-        <div className="mt-2 flex items-center justify-between text-[9px] font-bold uppercase tracking-[0.3em] text-black/40">
+        <div className="mt-2 flex items-center justify-between text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--ink-faint)]">
           <span>tejas labs · proof card</span>
           <span>j-001 · auto-tick</span>
         </div>
@@ -649,21 +646,24 @@ function WorkflowCard() {
 
 function Nav() {
   return (
-    <nav className="sticky top-0 z-40 border-b-2 border-black bg-[#f6f1e7]/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10">
-        <a href="#top" style={{ fontFamily: "var(--font-display)" }} className="text-sm uppercase tracking-[0.2em] hover:text-[#ff2d6f]">
+    <nav className="sticky top-0 z-40 border-b-2 border-[var(--border)] bg-[var(--paper)]/95 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 sm:px-10">
+        <a href="#top" style={{ fontFamily: "var(--font-display)" }} className="text-sm uppercase tracking-[0.2em] hover:text-[var(--pink)]">
           {studio.wordmark}
         </a>
         <div className="hidden gap-6 text-[10px] font-bold uppercase tracking-widest sm:flex">
-          <a href="#services" className="hover:text-[#1b3cff]">services</a>
-          <a href="#work" className="hover:text-[#1b3cff]">work</a>
-          <a href="#process" className="hover:text-[#1b3cff]">process</a>
-          <a href="#team" className="hover:text-[#1b3cff]">team</a>
-          <a href="#contact" className="hover:text-[#1b3cff]">contact</a>
+          <a href="#services" className="hover:text-[var(--blue)]">services</a>
+          <a href="#work" className="hover:text-[var(--blue)]">work</a>
+          <a href="#process" className="hover:text-[var(--blue)]">process</a>
+          <a href="#team" className="hover:text-[var(--blue)]">team</a>
+          <a href="#contact" className="hover:text-[var(--blue)]">contact</a>
         </div>
-        <a href="#contact" className="bg-[#111] px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[#f6f1e7] transition hover:bg-[#ff2d6f]">
-          {studio.cta}
-        </a>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <ThemeToggle />
+          <a href="#contact" className="bg-[var(--invert-bg)] px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[var(--invert-text)] transition hover:bg-[var(--pink)] hover:text-[#111111]">
+            {studio.cta}
+          </a>
+        </div>
       </div>
     </nav>
   );
@@ -671,30 +671,30 @@ function Nav() {
 
 function Footer() {
   return (
-    <footer id="top" className="border-t-2 border-black bg-[#f6f1e7]">
+    <footer id="top" className="border-t-2 border-[var(--border)] bg-[var(--paper)]">
       <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 sm:px-10 md:grid-cols-3">
         <div>
           <div style={{ fontFamily: "var(--font-display)" }} className="text-xl uppercase">{studio.wordmark}</div>
-          <p className="mt-3 max-w-xs text-sm leading-relaxed text-black/60">{studio.tagline}</p>
+          <p className="mt-3 max-w-xs text-sm leading-relaxed text-[var(--ink-soft)]">{studio.tagline}</p>
         </div>
         <div className="text-sm">
-          <div className="text-[10px] font-bold uppercase tracking-widest text-black/40">Get in touch</div>
-          <a href={`mailto:${studio.email}`} className="mt-2 block font-bold hover:text-[#ff2d6f]">{studio.email}</a>
-          <a href={studio.upwork} target="_blank" rel="noopener noreferrer" className="mt-1 block text-black/60 hover:text-[#1b3cff]">Upwork →</a>
-          <div className="mt-2 text-black/50">{studio.location}</div>
+          <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">Get in touch</div>
+          <a href={`mailto:${studio.email}`} className="mt-2 block font-bold hover:text-[var(--pink)]">{studio.email}</a>
+          <a href={studio.upwork} target="_blank" rel="noopener noreferrer" className="mt-1 block text-[var(--ink-soft)] hover:text-[var(--blue)]">Upwork →</a>
+          <div className="mt-2 text-[var(--ink-mute)]">{studio.location}</div>
         </div>
         <div className="text-sm">
-          <div className="text-[10px] font-bold uppercase tracking-widest text-black/40">Navigate</div>
-          <div className="mt-2 flex flex-col gap-1 text-black/60">
-            <a href="#services" className="hover:text-[#1b3cff]">Services</a>
-            <a href="#work" className="hover:text-[#1b3cff]">Work</a>
-            <a href="#process" className="hover:text-[#1b3cff]">Process</a>
-            <a href="#team" className="hover:text-[#1b3cff]">Team</a>
-            <a href="#contact" className="hover:text-[#1b3cff]">Contact</a>
+          <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">Navigate</div>
+          <div className="mt-2 flex flex-col gap-1 text-[var(--ink-soft)]">
+            <a href="#services" className="hover:text-[var(--blue)]">Services</a>
+            <a href="#work" className="hover:text-[var(--blue)]">Work</a>
+            <a href="#process" className="hover:text-[var(--blue)]">Process</a>
+            <a href="#team" className="hover:text-[var(--blue)]">Team</a>
+            <a href="#contact" className="hover:text-[var(--blue)]">Contact</a>
           </div>
         </div>
       </div>
-      <div className="border-t border-black/10 px-6 py-6 text-center text-[10px] font-bold uppercase tracking-widest text-black/40 sm:px-10">
+      <div className="border-t border-[var(--border-soft)] px-6 py-6 text-center text-[10px] font-bold uppercase tracking-widest text-[var(--ink-faint)] sm:px-10">
         © {new Date().getFullYear()} {studio.name} · {studio.trust}
       </div>
     </footer>
