@@ -80,6 +80,8 @@ html {
   background: var(--bg);
   color: var(--ink);
   transition: background-color 0.25s ease, color 0.25s ease;
+  /* Eliminate the 300ms tap delay and double-tap zoom on touch. */
+  touch-action: manipulation;
 }
 
 body {
@@ -252,7 +254,6 @@ body {
     opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
 [data-reveal].is-visible {
   opacity: 1;
@@ -389,6 +390,17 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .press-sheet:hover {
     transform: rotate(var(--rot, 0deg));
+  }
+}
+
+/* Mobile: kill press-sheet rotation transforms. The rotation +
+   sticky stacking causes noticeable scroll jank on phones; the
+   rotation is a desktop flourish and isn't missed on small screens. */
+@media (max-width: 768px) {
+  .press-sheet[data-reveal],
+  .press-sheet[data-reveal].is-visible,
+  .press-sheet:hover {
+    transform: none;
   }
 }
 

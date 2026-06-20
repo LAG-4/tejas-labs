@@ -13,8 +13,10 @@ import {
   techStack,
   testimonials,
 } from "@/lib/studio";
-import { useAutoReveal, useMouseParallax, useReducedMotion, useScrollProgress } from "@/lib/hooks";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { useAutoReveal, useHasHover, useReducedMotion } from "@/lib/hooks";
+import { ScrollProgressBar } from "@/components/scroll-progress-bar";
+import { ParallaxRegistrationMark } from "@/components/parallax-registration-mark";
+import { SiteNav } from "@/components/site-nav";
 
 const display = Archivo_Black({ weight: "400", subsets: ["latin"], variable: "--font-display", display: "swap" });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -87,25 +89,31 @@ function MouseSpotlight() {
 
 export default function Home() {
   useAutoReveal();
-  const progress = useScrollProgress();
-  const mouse = useMouseParallax(1);
   const reduced = useReducedMotion();
+  const hasHover = useHasHover();
 
   return (
     <div
       className={`${display.variable} ${body.variable} min-h-screen text-[var(--ink)]`}
       style={{ background: "var(--bg)", fontFamily: "var(--font-body)" }}
     >
-      {/* press progress as a registration bar */}
-      <div className="fixed left-0 top-0 z-50 flex h-2 w-full">
-        <div className="h-full bg-[var(--pink)]" style={{ width: `${progress * 100}%` }} />
-        <div className="h-full flex-1 bg-[var(--blue)]/15" />
-      </div>
+      <ScrollProgressBar />
 
-      {/* cursor spotlight — follows the mouse, tinted disk that fades on idle */}
-      {!reduced && <MouseSpotlight />}
+      {/* cursor spotlight — only on devices that can hover; pointless on touch */}
+      {!reduced && hasHover && <MouseSpotlight />}
 
-      <Nav />
+      <SiteNav
+        wordmark={studio.wordmark}
+        ctaHref="#contact"
+        ctaLabel={studio.cta}
+        links={[
+          { href: "#services", label: "services" },
+          { href: "#work", label: "work" },
+          { href: "#process", label: "process" },
+          { href: "#team", label: "team" },
+          { href: "#contact", label: "contact" },
+        ]}
+      />
 
       {/* tech stack marquee */}
       <div className="marquee-wrap overflow-hidden border-y border-[var(--ink-trace)] bg-[var(--invert-bg)] py-3 text-[var(--invert-text)]">
@@ -180,22 +188,7 @@ export default function Home() {
                   <div className="flex-1 bg-[var(--paper)]" />
                 </div>
                 <div className="relative mt-8 flex h-[55%] flex-col items-center justify-center">
-                  <div
-                    className="relative h-36 w-36 transition-transform duration-200 ease-out"
-                    style={{
-                      transform: `translate(${reduced ? 0 : mouse.x * 14}px, ${reduced ? 0 : mouse.y * 14}px)`,
-                    }}
-                  >
-                    <div className="absolute inset-0 rounded-full border-2 border-[var(--border)]" />
-                    <div className="absolute inset-3 rounded-full border border-[var(--ink-soft)]" />
-                    <div className="absolute inset-6 rounded-full border border-[var(--pink)]" />
-                    <div className="absolute inset-9 rounded-full border border-[var(--blue)]" />
-                    <div className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-[var(--ink)]" />
-                    <div className="absolute bottom-0 left-1/2 h-4 w-px -translate-x-1/2 bg-[var(--ink)]" />
-                    <div className="absolute left-0 top-1/2 h-px w-4 -translate-y-1/2 bg-[var(--ink)]" />
-                    <div className="absolute right-0 top-1/2 h-px w-4 -translate-y-1/2 bg-[var(--ink)]" />
-                    <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--ink)]" />
-                  </div>
+                  <ParallaxRegistrationMark />
                   <div className="mt-6 text-center">
                     <div className="text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--ink-mute)]">
                       precision · no. 01
@@ -641,31 +634,6 @@ function WorkflowCard() {
         </div>
       </div>
     </div>
-  );
-}
-
-function Nav() {
-  return (
-    <nav className="sticky top-0 z-40 border-b-2 border-[var(--border)] bg-[var(--paper)]/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 sm:px-10">
-        <a href="#top" style={{ fontFamily: "var(--font-display)" }} className="text-sm uppercase tracking-[0.2em] hover:text-[var(--pink)]">
-          {studio.wordmark}
-        </a>
-        <div className="hidden gap-6 text-[10px] font-bold uppercase tracking-widest sm:flex">
-          <a href="#services" className="hover:text-[var(--blue)]">services</a>
-          <a href="#work" className="hover:text-[var(--blue)]">work</a>
-          <a href="#process" className="hover:text-[var(--blue)]">process</a>
-          <a href="#team" className="hover:text-[var(--blue)]">team</a>
-          <a href="#contact" className="hover:text-[var(--blue)]">contact</a>
-        </div>
-        <div className="flex items-center gap-2 sm:gap-3">
-          <ThemeToggle />
-          <a href="#contact" className="bg-[var(--invert-bg)] px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[var(--invert-text)] transition hover:bg-[var(--pink)] hover:text-[#111111]">
-            {studio.cta}
-          </a>
-        </div>
-      </div>
-    </nav>
   );
 }
 

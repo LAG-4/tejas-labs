@@ -111,6 +111,21 @@ export function useElementProgress<T extends HTMLElement = HTMLDivElement>() {
   return { ref, progress };
 }
 
+/** True when the primary pointer can hover (desktop with a mouse).
+ *  False on touch-only phones — used to skip mouse-only effects. */
+export function useHasHover() {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mq = window.matchMedia("(hover: hover)");
+      const handler = () => onChange();
+      mq.addEventListener?.("change", handler);
+      return () => mq.removeEventListener?.("change", handler);
+    },
+    () => window.matchMedia("(hover: hover)").matches,
+    () => true,
+  );
+}
+
 export function useReducedMotion() {
   return useSyncExternalStore(
     (onChange) => {

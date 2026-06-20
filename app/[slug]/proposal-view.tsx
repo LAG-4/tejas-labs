@@ -14,11 +14,12 @@ import {
 } from "@/lib/proposal";
 import {
   useAutoReveal,
-  useMouseParallax,
+  useHasHover,
   useReducedMotion,
-  useScrollProgress,
 } from "@/lib/hooks";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ScrollProgressBar } from "@/components/scroll-progress-bar";
+import { ParallaxRegistrationMark } from "@/components/parallax-registration-mark";
+import { SiteNav } from "@/components/site-nav";
 
 const display = Archivo_Black({
   weight: "400",
@@ -133,9 +134,8 @@ export function ProposalView({
   proposalNo: string;
 }) {
   useAutoReveal();
-  const progress = useScrollProgress();
-  const mouse = useMouseParallax(1);
   const reduced = useReducedMotion();
+  const hasHover = useHasHover();
 
   const forClient = (s: string) => s.replace(/\{C\}/g, clientName);
   const mailto = `mailto:${studio.email}?subject=${encodeURIComponent(
@@ -147,15 +147,23 @@ export function ProposalView({
       className={`${display.variable} ${body.variable} min-h-screen text-[var(--ink)]`}
       style={{ background: "var(--bg)", fontFamily: "var(--font-body)" }}
     >
-      {/* scroll progress registration bar */}
-      <div className="fixed left-0 top-0 z-50 flex h-2 w-full">
-        <div className="h-full bg-[var(--pink)]" style={{ width: `${progress * 100}%` }} />
-        <div className="h-full flex-1 bg-[var(--blue)]/15" />
-      </div>
+      <ScrollProgressBar />
 
-      {!reduced && <MouseSpotlight />}
+      {!reduced && hasHover && <MouseSpotlight />}
 
-      <Nav clientName={clientName} mailto={mailto} />
+      <SiteNav
+        wordmark={studio.wordmark}
+        subtitle={`Proposal for ${clientName}`}
+        ctaHref={mailto}
+        ctaLabel="Get a quote"
+        links={[
+          { href: "#expertise", label: "Expertise" },
+          { href: "#solutions", label: "Solutions" },
+          { href: "#process", label: "Process" },
+          { href: "#why", label: "Why Us" },
+          { href: "#contact", label: "Contact" },
+        ]}
+      />
 
       <main className="relative mx-auto max-w-6xl px-6 pb-32 sm:px-10">
         {/* ── cover sheet ── */}
@@ -217,22 +225,7 @@ export function ProposalView({
                   <div className="flex-1 bg-[var(--paper)]" />
                 </div>
                 <div className="relative flex flex-1 flex-col items-center justify-center">
-                  <div
-                    className="relative h-36 w-36 transition-transform duration-200 ease-out"
-                    style={{
-                      transform: `translate(${reduced ? 0 : mouse.x * 14}px, ${reduced ? 0 : mouse.y * 14}px)`,
-                    }}
-                  >
-                    <div className="absolute inset-0 rounded-full border-2 border-[var(--border)]" />
-                    <div className="absolute inset-3 rounded-full border border-[var(--ink-soft)]" />
-                    <div className="absolute inset-6 rounded-full border border-[var(--pink)]" />
-                    <div className="absolute inset-9 rounded-full border border-[var(--blue)]" />
-                    <div className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-[var(--ink)]" />
-                    <div className="absolute bottom-0 left-1/2 h-4 w-px -translate-x-1/2 bg-[var(--ink)]" />
-                    <div className="absolute left-0 top-1/2 h-px w-4 -translate-y-1/2 bg-[var(--ink)]" />
-                    <div className="absolute right-0 top-1/2 h-px w-4 -translate-y-1/2 bg-[var(--ink)]" />
-                    <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--ink)]" />
-                  </div>
+                  <ParallaxRegistrationMark />
                   <div className="mt-6 max-w-[80%] text-center">
                     <div className="text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--ink-mute)]">
                       Prepared exclusively for
@@ -679,56 +672,6 @@ export function ProposalView({
 
       <Footer clientName={clientName} />
     </div>
-  );
-}
-
-function Nav({
-  clientName,
-  mailto,
-}: {
-  clientName: string;
-  mailto: string;
-}) {
-  const LINKS = [
-    { href: "#expertise", label: "Expertise" },
-    { href: "#solutions", label: "Solutions" },
-    { href: "#process", label: "Process" },
-    { href: "#why", label: "Why Us" },
-    { href: "#contact", label: "Contact" },
-  ];
-  return (
-    <nav className="sticky top-0 z-40 border-b-2 border-[var(--border)] bg-[var(--paper)]/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 sm:px-10">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            style={{ fontFamily: "var(--font-display)" }}
-            className="text-sm uppercase tracking-[0.2em] hover:text-[var(--pink)]"
-          >
-            {studio.wordmark}
-          </Link>
-          <span className="hidden text-[10px] font-bold uppercase tracking-widest text-[var(--ink-mute)] sm:inline">
-            · Proposal for {clientName}
-          </span>
-        </div>
-        <div className="hidden gap-6 text-[10px] font-bold uppercase tracking-widest md:flex">
-          {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="hover:text-[var(--blue)]">
-              {l.label}
-            </a>
-          ))}
-        </div>
-        <div className="flex items-center gap-2 sm:gap-3">
-          <ThemeToggle />
-          <a
-            href={mailto}
-            className="bg-[var(--invert-bg)] px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[var(--invert-text)] transition hover:bg-[var(--pink)] hover:text-[#111111]"
-          >
-            Get a quote
-          </a>
-        </div>
-      </div>
-    </nav>
   );
 }
 
