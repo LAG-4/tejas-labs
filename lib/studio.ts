@@ -69,6 +69,24 @@ export const services = [
 
 export const projects = [
   {
+    name: "Scrollable 3D Animated Websites",
+    year: "2026",
+    discipline: "Web development",
+    blurb:
+      "A premium scroll-driven website experience for creator brands and campaigns, combining cinematic motion, video-backed hero sections, responsive storytelling panels, and conversion-focused calls to action.",
+    metrics: ["scroll-synced animation", "3D/avatar-ready layout", "mobile-optimized storytelling"],
+    links: [{ label: "Visit site", url: "https://3dsite-six.vercel.app/" }],
+  },
+  {
+    name: "AI PDF Chatbot with Source Citations",
+    year: "2026",
+    discipline: "AI apps & integration",
+    blurb:
+      "A production-style RAG demo that turns static PDFs into an interactive AI assistant with document upload, parsing, vector search, streaming answers, source citations, summaries, and Supabase-backed storage.",
+    metrics: ["PDF upload + parsing", "RAG with exact citations", "Supabase + Vercel deploy"],
+    links: [{ label: "Visit app", url: "https://rag-app-demo-seven.vercel.app/app" }],
+  },
+  {
     name: "Ecoroom",
     year: "2025",
     discipline: "Sustainable marketplace",
