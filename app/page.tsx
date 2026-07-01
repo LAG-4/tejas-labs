@@ -17,6 +17,7 @@ import { useAutoReveal, useHasHover, useReducedMotion } from "@/lib/hooks";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { ParallaxRegistrationMark } from "@/components/parallax-registration-mark";
 import { SiteNav } from "@/components/site-nav";
+import { ChatbotWidget } from "@/components/chatbot-widget";
 
 const display = Archivo_Black({ weight: "400", subsets: ["latin"], variable: "--font-display", display: "swap" });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -472,6 +473,7 @@ export default function Home() {
       </main>
 
       <Footer />
+      <ChatbotWidget />
     </div>
   );
 }
