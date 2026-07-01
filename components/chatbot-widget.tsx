@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { MarkdownText } from "@/components/markdown-text";
 
 type ChatMessage = {
   id: string;
@@ -135,7 +136,11 @@ export function ChatbotWidget() {
               key={message.id}
               className={`chatbot-message ${message.role === "user" ? "from-user" : "from-bot"}`}
             >
-              {message.content}
+              {message.role === "assistant" ? (
+                <MarkdownText content={message.content} />
+              ) : (
+                message.content
+              )}
             </div>
           ))}
           {isSending && (

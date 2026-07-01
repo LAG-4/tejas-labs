@@ -376,6 +376,79 @@ body {
   color: var(--paper-text);
 }
 
+.chatbot-md {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.chatbot-md-p {
+  margin: 0;
+}
+
+.chatbot-md-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.chatbot-md-list li {
+  display: list-item;
+}
+
+.chatbot-message a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.chatbot-message strong {
+  font-weight: 700;
+}
+
+.chatbot-message code {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.82em;
+  background: var(--blue);
+  color: var(--paper-text);
+  padding: 0.05rem 0.3rem;
+}
+
+.chatbot-md-table-wrap {
+  overflow-x: auto;
+}
+
+.chatbot-md-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.78rem;
+}
+
+.chatbot-md-table th,
+.chatbot-md-table td {
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.45rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.chatbot-md-table th {
+  background: var(--blue);
+  color: var(--paper-text);
+  font-weight: 700;
+}
+
+.chatbot-md-table tr:nth-child(even) td {
+  background: var(--paper-faint);
+}
+
+@media (max-width: 640px) {
+  .chatbot-md-table {
+    font-size: 0.72rem;
+  }
+}
+
 .chatbot-thinking {
   display: flex;
   gap: 0.35rem;
