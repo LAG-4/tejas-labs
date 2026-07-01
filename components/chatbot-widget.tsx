@@ -18,11 +18,37 @@ const starterMessages: ChatMessage[] = [
   },
 ];
 
+const STORAGE_KEY = "tejas-chat-history";
+const HISTORY_MAX = 50;
+
 const suggestions = [
   "I need an AI chatbot",
   "Can you build a SaaS MVP?",
   "Show relevant work",
 ];
+
+function loadHistory(): ChatMessage[] {
+  if (typeof window === "undefined") return starterMessages;
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored) as ChatMessage[];
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch {
+    // ignore malformed/corrupted storage
+  }
+  return starterMessages;
+}
+
+function loadOpenState(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.sessionStorage.getItem("tejas-chat-open") === "1";
+  } catch {
+    return false;
+  }
+}
 
 function newId() {
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
@@ -48,13 +74,30 @@ function ChatBubbleIcon() {
 }
 
 export function ChatbotWidget() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>(starterMessages);
+  const [isOpen, setIsOpen] = useState<boolean>(() => loadOpenState());
+  const [messages, setMessages] = useState<ChatMessage[]>(() => loadHistory());
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState("");
   const logRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    try {
+      const trimmed = messages.slice(-HISTORY_MAX);
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
+    } catch {
+      // storage full or unavailable — non-fatal
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem("tejas-chat-open", isOpen ? "1" : "0");
+    } catch {
+      // ignore
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -107,6 +150,16 @@ export function ChatbotWidget() {
     void sendMessage(input);
   }
 
+  function resetChat() {
+    setMessages(starterMessages);
+    setError("");
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+  }
+
   return (
     <div className="chatbot-shell">
       <section
@@ -120,6 +173,15 @@ export function ChatbotWidget() {
             <div className="chatbot-kicker">online receptionist</div>
             <h2>Ask Tejas</h2>
           </div>
+          <button
+            type="button"
+            className="chatbot-icon-button"
+            onClick={resetChat}
+            aria-label="Clear chat history"
+            title="Clear chat"
+          >
+            ↻
+          </button>
           <button
             type="button"
             className="chatbot-icon-button"
@@ -152,7 +214,7 @@ export function ChatbotWidget() {
           )}
         </div>
 
-        {messages.length === 1 && (
+        {messages.length === 1 && messages[0]?.id === "welcome" && (
           <div className="chatbot-suggestions" aria-label="Suggested prompts">
             {suggestions.map((suggestion) => (
               <button

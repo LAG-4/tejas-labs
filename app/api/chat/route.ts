@@ -149,6 +149,66 @@ const cannedReplies = new Map<string, string>([
   ],
 ]);
 
+function buildProjectsAnswer() {
+  const featured = projects
+    .map((p) => `- **${p.name}** (${p.year}, ${p.discipline}) — ${p.blurb}`)
+    .join("\n");
+  const extended = extendedProjects
+    .map((p) => `- **${p.name}** (${p.category}) — ${p.body}`)
+    .join("\n");
+  return [
+    "Here's the full Tejas Labs portfolio.",
+    "",
+    "**Featured projects:**",
+    featured,
+    "",
+    "**Extended portfolio:**",
+    extended,
+    "",
+    "Which of these is closest to what you want to build? Tell me your goal and I'll point you to the right next step.",
+  ].join("\n");
+}
+
+function buildTeamAnswer() {
+  const founders = team
+    .map((m) => `- **${m.name}** (${m.role}) — ${m.bio}`)
+    .join("\n");
+  const devs = developers
+    .map((d) => `- **${d.name}** — ${d.capabilities}`)
+    .join("\n");
+  return [
+    "The Tejas Labs team:",
+    "",
+    "**Founders & specialists:**",
+    founders,
+    "",
+    "**Developers (routing by skill):**",
+    devs,
+    "",
+    "What are you building? I'll match you with the right person.",
+  ].join("\n");
+}
+
+const projectTriggers = ["project", "projects", "portfolio", "work", "case stud", "what have you built", "what have u built", "what all projects", "past work", "previous work", "show work", "show your work", "examples"];
+const teamTriggers = ["team", "who works", "who are the", "developers", "who builds", "your people", "staff", "hire"];
+const servicesTriggers = ["service", "services", "what do you do", "what do u do", "what can you do", "what can u do", "offer", "offerings", "capabilities"];
+const pricingTriggers = ["price", "pricing", "cost", "how much", "rate", "rates", "charge", "budget", "quote", "estimate"];
+
+function matchIntent(text: string): string | undefined {
+  const n = normalize(text);
+  if (projectTriggers.some((t) => n.includes(t))) return buildProjectsAnswer();
+  if (teamTriggers.some((t) => n.includes(t))) return buildTeamAnswer();
+  if (servicesTriggers.some((t) => n.includes(t))) {
+    return (
+      "Tejas Labs offers:\n- **AI Chatbots & Voice Agents** — Vapi, GoHighLevel, OpenAI, WhatsApp\n- **GoHighLevel Implementation** — funnels, pipelines, Twilio, AI chat\n- **Lead Generation Websites** — high-conversion landing pages + CRM\n- **Business Automation** — Python, n8n, APIs, GHL workflows\n- **Full-Stack Web & SaaS** — Next.js, React, Node, Postgres\n- **Mobile Apps** — Flutter + Firebase\n- **AI Consulting** — prompt eng, RAG, datasets, agent architecture\n\nWhat would you like to start with?"
+    );
+  }
+  if (pricingTriggers.some((t) => n.includes(t))) {
+    return "Ballpark pricing at Tejas Labs:\n- **AI chatbot setup** — $300–800\n- **Lead-gen website** — $500–1,500\n- **GoHighLevel complete setup** — $1,000–3,000+\n- **Custom SaaS MVP** — $2,000–5,000+\n\nMonthly maintenance retainers are available after launch. Share a quick scope and I'll give a tighter estimate.";
+  }
+  return undefined;
+}
+
 function cacheGet(key: string) {
   const value = replyCache.get(key);
   if (value === undefined) return undefined;
@@ -201,6 +261,14 @@ export async function POST(request: Request) {
 
     const cached = cacheGet(cacheKey);
     if (cached !== undefined) return Response.json({ reply: cached });
+  }
+
+  if (lastMessage.role === "user") {
+    const intentReply = matchIntent(lastMessage.content);
+    if (intentReply !== undefined) {
+      if (cacheKey) cacheSet(cacheKey, intentReply);
+      return Response.json({ reply: intentReply });
+    }
   }
 
   try {
