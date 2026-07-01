@@ -27,6 +27,25 @@ function newId() {
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
+function ChatBubbleIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="chatbot-fab-icon"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2.4"
+    >
+      <path d="M5 6.8C5 5.25 6.25 4 7.8 4h8.4C17.75 4 19 5.25 19 6.8v5.4c0 1.55-1.25 2.8-2.8 2.8h-4.55L7.4 19v-4H7.8C6.25 15 5 13.75 5 12.2V6.8Z" />
+      <path d="M9 9h6" />
+      <path d="M9 12h3.5" />
+    </svg>
+  );
+}
+
 export function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>(starterMessages);
@@ -168,7 +187,9 @@ export function ChatbotWidget() {
         aria-controls="tejas-chatbot"
         aria-label={isOpen ? "Hide Tejas Labs chat" : "Open Tejas Labs chat"}
       >
-        <span className="chatbot-fab-mark">TL</span>
+        <span className="chatbot-fab-mark">
+          <ChatBubbleIcon />
+        </span>
         <span className="chatbot-fab-text">Chat</span>
       </button>
     </div>
