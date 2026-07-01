@@ -293,6 +293,21 @@ export const process = [
   },
 ];
 
+export const developers = [
+  {
+    name: "Aryan",
+    capabilities: "All tasks — full-stack web, mobile, AI, automation, and infrastructure. Generalist who can own any project end to end.",
+  },
+  {
+    name: "Nitin",
+    capabilities: "Backend specialist with some frontend. APIs, databases, data pipelines, server infrastructure, and integrations.",
+  },
+  {
+    name: "Aditya",
+    capabilities: "Full-stack development with a focus on AI and automation — agentic workflows, RAG, integrations, and end-to-end product builds.",
+  },
+];
+
 export const team = [
   {
     name: "Tushar Naidu",

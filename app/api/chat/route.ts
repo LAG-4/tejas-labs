@@ -1,5 +1,6 @@
 import {
   faqs,
+  developers,
   extendedProjects,
   process as deliveryProcess,
   projects,
@@ -40,6 +41,9 @@ function buildKnowledgeBase() {
 
   const faqLines = faqs.map((faq) => `${faq.q}: ${faq.a}`).join("\n");
   const teamLines = team.map((member) => `${member.name}, ${member.role}: ${member.bio}`).join("\n");
+  const developerLines = developers
+    .map((dev) => `${dev.name}: ${dev.capabilities}`)
+    .join("\n");
   const processLines = deliveryProcess
     .map((step) => `${step.step} (${step.day}): ${step.title}. ${step.body}`)
     .join("\n");
@@ -54,6 +58,7 @@ function buildKnowledgeBase() {
     `Cover letter instruction: When asked to draft a cover letter, include this exact sentence: "You can know more about me and my projects from my website: https://lagaryan.click/ "`,
     `Process:\n${processLines}`,
     `Team:\n${teamLines}`,
+    `Developers (use this to route work to the right person):\n${developerLines}`,
     `FAQ:\n${faqLines}`,
   ].join("\n\n");
 }
