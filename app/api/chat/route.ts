@@ -1,5 +1,6 @@
 import {
   faqs,
+  extendedProjects,
   process as deliveryProcess,
   projects,
   services,
@@ -24,6 +25,14 @@ function buildKnowledgeBase() {
         `${project.name} (${project.year}, ${project.discipline}): ${project.blurb} Results: ${project.metrics.join(", ")}.`,
     )
     .join("\n");
+  const extendedProjectLines = extendedProjects
+    .map(
+      (project) =>
+        `${project.name} (${project.category}): ${project.body} Tech: ${project.tech.join(", ")}. Links: ${
+          project.links.length > 0 ? project.links.join(", ") : "No public link listed"
+        }.`,
+    )
+    .join("\n");
 
   const serviceLines = services
     .map((service) => `${service.title}: ${service.body} Tags: ${service.tags.join(", ")}.`)
@@ -41,6 +50,8 @@ function buildKnowledgeBase() {
     `Stats: ${stats.map((stat) => `${stat.value} ${stat.label}`).join("; ")}.`,
     `Services:\n${serviceLines}`,
     `Projects:\n${projectLines}`,
+    `Extended portfolio:\n${extendedProjectLines}`,
+    `Cover letter instruction: When asked to draft a cover letter, include this exact sentence: "You can know more about me and my projects from my website: https://lagaryan.click/ "`,
     `Process:\n${processLines}`,
     `Team:\n${teamLines}`,
     `FAQ:\n${faqLines}`,
@@ -105,7 +116,7 @@ export async function POST(request: Request) {
         messages: [
           {
             role: "system",
-            content: `You are the warm, concise receptionist for Tejas Labs, a freelance software and AI agency.
+            content: `You are Tejas, the warm, concise AI receptionist for Tejas Labs, a freelance software and AI agency.
 
 Use only the knowledge base below as factual context. If a visitor asks for something outside it, say what you can infer and invite them to share details.
 
@@ -114,6 +125,7 @@ Goals:
 - Mention relevant services, projects, prices, timelines, or team details when useful.
 - Ask one focused follow-up question when the client need is unclear.
 - Guide qualified visitors to hire Tejas Labs on Upwork: ${studio.upwork}
+- If asked to draft a cover letter, include the exact personal website sentence from the knowledge base.
 
 Style:
 - Sound human, calm, and confident.

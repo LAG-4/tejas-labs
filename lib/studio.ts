@@ -140,6 +140,128 @@ export const projects = [
   },
 ];
 
+export const extendedProjects = [
+  {
+    name: "TejasLabs",
+    category: "Client / Freelance Projects",
+    body:
+      "Freelance agency co-founded with Tushar, Ansh, and Nitin. Services include AI chatbots, GoHighLevel, lead generation sites, web/mobile development, and automation.",
+    tech: ["AI chatbots", "GoHighLevel", "Web development", "Mobile development", "Automation"],
+    links: ["https://tejaslabs.co.in"],
+  },
+  {
+    name: "Brody — Stop Deportation GHL Sites",
+    category: "Client / Freelance Projects",
+    body:
+      "Six GoHighLevel websites for Utah law firms handling stop-deportation cases, focused on lead generation.",
+    tech: ["GoHighLevel"],
+    links: ["https://stopdeportationutah.com/"],
+  },
+  {
+    name: "Brody — Dynamic Portfolio Site",
+    category: "Client / Freelance Projects",
+    body:
+      "Active personal portfolio that dynamically changes content based on the visitor through cookies and link parameters.",
+    tech: ["Next.js", "GoHighLevel"],
+    links: ["https://brodybillings.com/"],
+  },
+  {
+    name: "CafeHopper",
+    category: "Web Applications",
+    body:
+      "NomadList-style discovery platform for Hyderabad cafes, restaurants, and bars, with Trivago-style offer aggregation from Zomato and Swiggy and 100+ ranked places.",
+    tech: ["Next.js 15", "React 19", "Tailwind v4", "Convex", "Firebase", "Turbopack"],
+    links: ["https://github.com/LAG-4/cafefinder", "https://cafefinder-hyd.vercel.app"],
+  },
+  {
+    name: "Portfolio Next",
+    category: "Web Applications",
+    body:
+      "Personal portfolio with a unique terminal/CLI view via curl, rendering ANSI-colored plain text for terminal clients and a full website for browsers.",
+    tech: ["Next.js 16", "React 19", "Tailwind v4", "Framer Motion", "shadcn/ui"],
+    links: ["https://lagaryan.click"],
+  },
+  {
+    name: "CafeCompas",
+    category: "Mobile Apps",
+    body:
+      "Mobile companion to CafeHopper with group match sessions where friends swipe on places and reveal shared picks, plus anonymous auth and room management.",
+    tech: ["Flutter 3.10", "Riverpod", "Firebase Auth", "Firestore", "Flutter Map", "OSM data"],
+    links: ["https://cafefinder-hyd.vercel.app/"],
+  },
+  {
+    name: "LearnAI",
+    category: "Mobile Apps",
+    body:
+      "AI education app with 12 structured topics, gamified progression, and a real-time AI news feed via Firestore. Live on Google Play with 200+ downloads.",
+    tech: ["Flutter", "Riverpod", "Firebase Firestore"],
+    links: ["https://play.google.com/store/apps/details?id=com.lagaryan.learnai"],
+  },
+  {
+    name: "Gig Todo App",
+    category: "Mobile Apps",
+    body:
+      "Experimental cross-platform todo app with Firebase backend and confetti celebration on task completion.",
+    tech: ["Flutter", "Riverpod", "GoRouter", "Firebase Auth", "Firestore"],
+    links: ["https://github.com/LAG-4/todo_app"],
+  },
+  {
+    name: "SheSafe",
+    category: "Mobile Apps",
+    body:
+      "Campus safety app for women with an integrated AI chatbot and IoT emergency response device trigger. National Winner at Smart India Hackathon 2023, Government of India.",
+    tech: ["Flutter", "Firebase", "IoT"],
+    links: ["https://github.com/LAG-4/sih.git"],
+  },
+  {
+    name: "ChatSQL / AI Assistant Hub",
+    category: "AI / Automation Projects",
+    body:
+      "Multi-purpose Streamlit app for financial analysis with Gemini, natural-language-to-SQL, and an AI advisors council with multiple personalities.",
+    tech: ["Python", "Streamlit", "Gemini", "SQLite", "MySQL"],
+    links: ["https://multipurpose-ai.streamlit.app/", "https://github.com/LAG-4/chat-sql"],
+  },
+  {
+    name: "RAG Search Engine",
+    category: "AI / Automation Projects",
+    body:
+      "Python search engine implementing BM25 ranking for movie and document search.",
+    tech: ["Python 3.12", "uv", "BM25", "argparse CLI"],
+    links: ["https://rag-app-demo-seven.vercel.app/app"],
+  },
+  {
+    name: "OpenClaw / Hermes Agent",
+    category: "AI / Automation Projects",
+    body:
+      "Personal AI agent stack running on a home server with self-hosted automation, Fitbit integration, cron jobs, and a Telegram gateway.",
+    tech: ["Python", "systemd", "Tailscale", "Docker", "SQLite"],
+    links: [],
+  },
+  {
+    name: "Personal Homelab & Self-Hosted Infrastructure",
+    category: "AI / Automation Projects",
+    body:
+      "24/7 home server on a repurposed laptop running Docker containers for media streaming, fitness tracking, task management, AI agent infrastructure, photo backup, and public-facing services through reverse proxy tunnels. Active with 20+ services.",
+    tech: [
+      "Ubuntu 24.04 LTS",
+      "Docker Compose",
+      "Tailscale",
+      "Cloudflare Tunnel",
+      "systemd",
+      "Prometheus",
+      "Grafana",
+      "Jellyfin",
+      "Immich",
+      "PostgreSQL",
+      "SQLite",
+      "Python",
+      "FastAPI",
+      "ChromaDB",
+    ],
+    links: [],
+  },
+];
+
 export const process = [
   {
     step: "Scope",

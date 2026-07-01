@@ -13,7 +13,7 @@ const starterMessages: ChatMessage[] = [
     id: "welcome",
     role: "assistant",
     content:
-      "Hi, I am the Tejas Labs receptionist. Tell me what you want to build, and I will point you to the most relevant services, projects, and next step.",
+      "Hi, I am Tejas, the Tejas Labs receptionist. Tell me what you want to build, and I will point you to the most relevant services, projects, and next step.",
   },
 ];
 
@@ -117,7 +117,7 @@ export function ChatbotWidget() {
         <div className="chatbot-header">
           <div>
             <div className="chatbot-kicker">online receptionist</div>
-            <h2>Tejas Labs</h2>
+            <h2>Ask Tejas</h2>
           </div>
           <button
             type="button"
@@ -168,8 +168,8 @@ export function ChatbotWidget() {
             ref={inputRef}
             value={input}
             onChange={(event) => setInput(event.target.value)}
-            placeholder="Ask about your project..."
-            aria-label="Message Tejas Labs"
+            placeholder="Ask Tejas about your project..."
+            aria-label="Message Tejas"
             maxLength={700}
             disabled={isSending}
           />
@@ -185,12 +185,12 @@ export function ChatbotWidget() {
         onClick={() => setIsOpen((value) => !value)}
         aria-expanded={isOpen}
         aria-controls="tejas-chatbot"
-        aria-label={isOpen ? "Hide Tejas Labs chat" : "Open Tejas Labs chat"}
+        aria-label={isOpen ? "Hide Tejas chat" : "Open Tejas chat"}
       >
         <span className="chatbot-fab-mark">
           <ChatBubbleIcon />
         </span>
-        <span className="chatbot-fab-text">Chat</span>
+        <span className="chatbot-fab-text">Ask Tejas</span>
       </button>
     </div>
   );
