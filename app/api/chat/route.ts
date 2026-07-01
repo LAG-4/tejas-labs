@@ -16,7 +16,7 @@ type IncomingMessage = {
 
 const OPENCODE_BASE_URL =
   process.env.OPENCODE_GO_BASE_URL ?? "https://opencode.ai/zen/v1";
-const OPENCODE_MODEL = process.env.OPENCODE_GO_MODEL ?? "deepseek-v4-flash";
+const OPENCODE_MODEL = process.env.OPENCODE_GO_MODEL ?? "nemotron-3-ultra-free";
 
 function buildKnowledgeBase() {
   const projectLines = projects
@@ -112,7 +112,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         model: OPENCODE_MODEL,
         temperature: 0.35,
-        max_tokens: 550,
+        max_tokens: 1500,
         messages: [
           {
             role: "system",
