@@ -12,11 +12,6 @@ from Aryan Gupta. Keep the repository private, never commit credentials, and do
 not share source archives, build artifacts, or deployment access outside that
 authorized group.
 
-## Deployment control
-
-Automatic Vercel deployments from Git are intentionally disabled in
-[`vercel.json`](./vercel.json). A project owner can re-enable Git deployments
-in Vercel Project Settings or deploy a reviewed revision manually when ready.
 
 ## Getting Started
 
