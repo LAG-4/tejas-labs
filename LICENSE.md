@@ -1,13 +1,13 @@
-# Tejas Labs Proprietary Software License
+# Aryan Gupta Proprietary Software License
 
-Copyright (c) 2026 Tejas Labs. All rights reserved.
+Copyright (c) 2026 Aryan Gupta. All rights reserved.
 
 This repository, its source code, designs, documentation, assets, prompts,
 configuration, and compiled outputs (collectively, the “Software”) are
-proprietary and confidential to Tejas Labs.
+proprietary and confidential to Aryan Gupta.
 
-No license is granted to any person or entity except where Tejas Labs has given
-prior written authorization signed by an authorized Tejas Labs representative.
+No license is granted to any person or entity except where Aryan Gupta has given
+prior written authorization signed by Aryan Gupta.
 Without that authorization, you may not, directly or indirectly:
 
 1. use, run, copy, download, reproduce, publish, distribute, sublicense, sell,
@@ -30,5 +30,5 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTIES OF ANY KIND. TO THE
 MAXIMUM EXTENT PERMITTED BY LAW, TEJAS LABS DISCLAIMS ALL WARRANTIES AND SHALL
 NOT BE LIABLE FOR ANY DAMAGES ARISING FROM THE SOFTWARE OR UNAUTHORIZED USE.
 
-These terms do not replace a signed agreement with Tejas Labs. Where a signed
+These terms do not replace a signed agreement with Aryan Gupta. Where a signed
 agreement applies, that agreement controls to the extent of any conflict.

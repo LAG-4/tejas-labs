@@ -1,14 +1,14 @@
 # Tejas Labs
 
-**Proprietary and confidential software.** Copyright (c) 2026 Tejas Labs. All rights reserved.
+**Proprietary and confidential software.** Copyright (c) 2026 Aryan Gupta. All rights reserved.
 
 This repository is not open source. No permission is granted to copy, modify,
 redistribute, publish, reverse engineer, use to train an AI system, or use with
 an AI system to create derivative works. See [LICENSE.md](./LICENSE.md) for the
 complete terms.
 
-Access is restricted to Tejas Labs and people who have written authorization
-from Tejas Labs. Keep the repository private, never commit credentials, and do
+Access is restricted to Aryan Gupta and people who have written authorization
+from Aryan Gupta. Keep the repository private, never commit credentials, and do
 not share source archives, build artifacts, or deployment access outside that
 authorized group.
 
