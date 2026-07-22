@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tejas Labs
+
+**Proprietary and confidential software.** Copyright (c) 2026 Tejas Labs. All rights reserved.
+
+This repository is not open source. No permission is granted to copy, modify,
+redistribute, publish, reverse engineer, use to train an AI system, or use with
+an AI system to create derivative works. See [LICENSE.md](./LICENSE.md) for the
+complete terms.
+
+Access is restricted to Tejas Labs and people who have written authorization
+from Tejas Labs. Keep the repository private, never commit credentials, and do
+not share source archives, build artifacts, or deployment access outside that
+authorized group.
+
+## Deployment control
+
+Automatic Vercel deployments from Git are intentionally disabled in
+[`vercel.json`](./vercel.json). A project owner can re-enable Git deployments
+in Vercel Project Settings or deploy a reviewed revision manually when ready.
 
 ## Getting Started
 

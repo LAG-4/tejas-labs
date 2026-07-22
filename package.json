@@ -2,6 +2,8 @@
   "name": "tejas-labs",
   "version": "0.1.0",
   "private": true,
+  "license": "UNLICENSED",
+  "description": "Proprietary Tejas Labs website and application.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
