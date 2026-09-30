@@ -366,7 +366,9 @@ export default function Home() {
             <div className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--blue)]">our team</div>
             <h2 style={{ fontFamily: "var(--font-display)" }} className="mt-2 text-5xl uppercase">Meet the team</h2>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2">
+          {/* Single column: cards stack instead of stretching to a shared row
+              height, so a card without a photo doesn't render as an empty box. */}
+          <div className="grid max-w-xl gap-6">
             {team.map((t, i) => (
               <div
                 key={t.name}
