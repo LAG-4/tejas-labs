@@ -76,10 +76,8 @@ const jsonLd = {
         "Vertical SaaS integrations",
         "Full-stack AI applications",
       ],
-      founder: [
-        { "@id": `${SITE_URL}#person-tushar` },
-        { "@id": `${SITE_URL}#person-ansh` },
-      ],
+      founder: [{ "@id": `${SITE_URL}#person-tushar` }],
+      employee: [{ "@id": `${SITE_URL}#person-nitin` }],
       sameAs: [studio.upwork],
     },
     {
@@ -99,9 +97,9 @@ const jsonLd = {
     },
     {
       "@type": "Person",
-      "@id": `${SITE_URL}#person-ansh`,
-      name: "Ansh Pandey",
-      jobTitle: "Founder",
+      "@id": `${SITE_URL}#person-nitin`,
+      name: "Nitin",
+      jobTitle: "Backend Dev · Full-Stack",
       worksFor: { "@id": `${SITE_URL}#organization` },
     },
   ],

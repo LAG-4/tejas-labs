@@ -316,18 +316,6 @@ export const team = [
     bio: "Leads AI architecture and backend systems — LangGraph workflows, RAG pipelines, chatbot integrations, and the infrastructure that keeps everything running in production.",
   },
   {
-    name: "Ansh Pandey",
-    role: "Founder",
-    img: "/ansh.png",
-    bio: "Builds the full-stack applications, lead gen sites, GoHighLevel implementations, and SaaS integrations — React, Next.js, Node, Vercel deployments, and everything in between.",
-  },
-  {
-    name: "Lag",
-    role: "AI Developer",
-    img: undefined,
-    bio: "Our AI specialist — prompt engineering, chatbot architecture, agentic workflows, dataset collection and annotation, evaluation pipelines, and the AI layer behind every product we ship.",
-  },
-  {
     name: "Nitin",
     role: "Backend Dev · Full-Stack",
     img: undefined,
